@@ -1,4 +1,4 @@
-# SWE574
+# Herodot
 
 This project is done as part of the SWE574 course of Bogazici University, namely Software Development as a Team.
 
