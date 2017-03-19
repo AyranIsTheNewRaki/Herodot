@@ -1,4 +1,4 @@
-# Heredot
+# Herodot
 
 # Introduction #
 This project is done as part of the SWE574 course of Bogazici University, namely Software Development as a Team.
@@ -36,7 +36,7 @@ Extensive research is done on the terminology, standards, data models, engineeri
 
 
 
-# Created by Team @AyranIsTheNewRaki, Project Name:Heredot #
+# Created by Team @AyranIsTheNewRaki, Project Name:Herodot #
 
 [Organization](https://github.com/orgs/AyranIsTheNewRaki/people) 
 
