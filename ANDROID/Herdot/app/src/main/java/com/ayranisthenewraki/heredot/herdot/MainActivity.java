@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         final EditText emailInput;
+        final EditText usernameInput;
         final EditText passwordInput;
         final TextView outputField;
 
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         emailInput = (EditText) findViewById(R.id.emailField);
+        usernameInput = (EditText) findViewById(R.id.usernameField);
         passwordInput = (EditText) findViewById(R.id.passwordField);
         outputField = (TextView) findViewById(R.id.emailAndPassword);
 
@@ -37,9 +39,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 String email = emailInput.getText().toString();
+                String username = usernameInput.getText().toString();
                 String password = passwordInput.getText().toString();
 
-                outputField.setText("Email: " + email + " - Password: " + password);
+                outputField.setText("Email: " + email +" - Username: " + username +" - Password: " + password);
             }
         });
     }
