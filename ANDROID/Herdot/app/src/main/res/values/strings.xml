@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Herdot</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_browse_heritage_items_view">BrowseHeritageItemsView</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_heritage_item_homepage">HeritageItemHomepageActivity</string>
 </resources>

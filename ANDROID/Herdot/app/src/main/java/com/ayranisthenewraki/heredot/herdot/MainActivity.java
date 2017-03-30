@@ -1,5 +1,6 @@
 package com.ayranisthenewraki.heredot.herdot;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,8 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Button;
 import android.widget.TextView;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -34,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         passwordInput = (EditText) findViewById(R.id.passwordField);
         outputField = (TextView) findViewById(R.id.emailAndPassword);
 
-        Button submitButton = (Button) findViewById(R.id.signInButton);
+        final Button submitButton = (Button) findViewById(R.id.signInButton);
         submitButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -42,7 +45,49 @@ public class MainActivity extends AppCompatActivity {
                 String username = usernameInput.getText().toString();
                 String password = passwordInput.getText().toString();
 
-                outputField.setText("Email: " + email +" - Username: " + username +" - Password: " + password);
+                // make call to backend to verify user
+                if(submitButton.getText().equals("Login")){
+
+                    if(!username.equals("idilgun") || !password.equals("123456")){
+                        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                        alertDialog.setTitle("Alert");
+                        alertDialog.setMessage("The username or password is incorrect");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                    }
+                    else{
+                        openHeritageItemsPage(view);
+                    }
+
+                }
+                // make call to backend to create new user
+                else{
+                    openHeritageItemsPage(view);
+                }
+            }
+        });
+
+        final Button showLoginButton = (Button) findViewById(R.id.showLoginFields);
+        showLoginButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                if(showLoginButton.getText().equals("I Already Have an Account")){
+                    emailInput.setVisibility(View.INVISIBLE);
+                    usernameInput.setHint("Enter Username or Password");
+                    submitButton.setText("Login");
+                    showLoginButton.setText("I Want to Create an Account");
+                }else{
+                    emailInput.setVisibility(View.VISIBLE);
+                    usernameInput.setHint("Enter Username");
+                    submitButton.setText("SignIn");
+                    showLoginButton.setText("I Already Have an Account");
+                }
+
             }
         });
     }
@@ -53,6 +98,13 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
+    public void openHeritageItemsPage(View view) {
+        Intent intent = new Intent(this, HeritageItemHomepageActivity.class);
+        startActivity(intent);
+    }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
