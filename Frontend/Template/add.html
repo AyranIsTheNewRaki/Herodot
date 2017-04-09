@@ -19,6 +19,9 @@
             <a href=""><img src="images/logo.png" alt=""></a>
         </div>
         <div class="menu col-lg-6 col-sm-12 text-right">
+            <div class="searchbox">
+                <input type="text" placeholder="Search heritage item" />
+            </div>
             <ul>
                 <li><a href="add.html">Add New Item</a></li>
                 <li><a href="myheritages.html">My Heritages</a></li>
@@ -37,8 +40,9 @@
     </div>
     <div class="row">
         <div class="content col-lg-12">
-            <div class="box box-form box-form-inner box-bg-transparent col-lg-6 col-md-8 col-sm-12 col-lg-offset-3 col-md-offset-2">
+            <div class="box box-form box-form-inner box-bg-transparent col-lg-10 col-md-10 col-sm-12 col-lg-offset-1 col-md-offset-1">
                 <div class="form inner-form">
+                    <!--
                     <div id="add-step1" class="segmented-wrapper if-tangible">
                         <ul class="segmented-control">
                             <li class="segmented-control__item">
@@ -51,7 +55,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div id="add-step2" class="segmented-wrapper if-movable hidden-start">
+                    <div id="add-step2" class="segmented-wrapper if-movable">
                         <ul class="segmented-control">
                             <li class="segmented-control__item">
                                 <input class="segmented-control__input" type="radio" value="1" name="movable" id="movable">
@@ -63,78 +67,112 @@
                             </li>
                         </ul>
                     </div>
+                    -->
                     <div class="box-fields">
-                        <div id="add-step3" class="row hidden-start">
-                            <div class="row fieldgroup group-selectbox">
-                                <div class="col-lg-4 col-sm-12 label-wrapper"><label for="">Type of structure</label></div>
-                                <div class="col-lg-8 col-sm-12 field-wrapper">
-                                    <select name="" id="">
-                                        <option style="display: none;" disabled="disabled">Select a type</option>
-                                        <option value="1">Monument</option>
-                                        <option value="2">Archeological Site</option>
-                                        <option value="3">Architecture / Ancient Architecture</option>
-                                        <option value="4">Museum</option>
-                                        <option value="5">Natural Site</option>
-                                        <option value="6">Other</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="add-step4" class="row hidden-start">
-                            <div class="row fieldgroup group-textfield">
-                                <div class="col-lg-4 col-sm-12 label-wrapper"><label for="">Title/Name</label></div>
-                                <div class="col-lg-8 col-sm-12 field-wrapper">
-                                    <input type="text" placeholder="" />
-                                </div>
-                            </div>
-                            <div class="row fieldgroup group-textarea">
-                                <div class="col-lg-4 col-sm-12 label-wrapper"><label for="">Description</label></div>
-                                <div class="col-lg-8 col-sm-12 field-wrapper">
-                                    <textarea name="" id=""></textarea>
-                                </div>
-                            </div>
-                            <div class="row fieldgroup group-textfield">
-                                <div class="col-lg-4 col-sm-12 label-wrapper"><label for="">Opening Date</label></div>
-                                <div class="col-lg-8 col-sm-12 field-wrapper">
-                                    <input type="text" placeholder="" />
-                                </div>
-                            </div>
-                            <div class="row fieldgroup group-textfield closing-date-wrapper">
-                                <div class="col-lg-4 col-sm-12 label-wrapper"><label for="">Closing Date</label></div>
-                                <div class="col-lg-8 col-sm-12 field-wrapper">
-                                    <input type="text" placeholder="" />
-                                </div>
-                            </div>
-                            <div class="row fieldgroup group-textfield replacement-wrapper">
-                                <div class="col-lg-4 col-sm-12 label-wrapper"><label for="">Replacement</label></div>
-                                <div class="col-lg-8 col-sm-12 field-wrapper">
-                                    <input type="text" placeholder="" />
-                                </div>
-                            </div>
-                            <div class="row fieldgroup group-checkbox still-in-its-place-wrapper">
-                                <div class="col-lg-4 col-sm-12 label-wrapper"><label for="">Still In Its Place</label></div>
-                                <div class="col-lg-8 col-sm-12 field-wrapper">
-                                    <div class="radio black">
-                                        <input type="radio" name="group1" id="radio1">
-                                        <label for="radio1"></label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row fieldgroup group-textfield">
-                                <div class="col-lg-4 col-sm-12 label-wrapper"><label for="">Location</label></div>
-                                <div class="col-lg-8 col-sm-12 field-wrapper">
-                                    <input type="text" placeholder="" />
-                                </div>
+                        <div id="add-step4" class="row">
+                            <div class="row fieldgroup group-th">
+                                <div class="col-lg-3 col-sm-12 label-wrapper"><label for="">Property</label></div>
+                                <div class="col-lg-9 col-sm-12 label-wrapper label-wrapper-right"><label for="">Value</label></div>
                             </div>
                             <div class="row fieldgroup group-fileupload">
-                                <div class="col-lg-4 col-sm-12 label-wrapper"><label for=""></label></div>
-                                <div class="col-lg-8 col-sm-12 field-wrapper">
+                                <div class="col-lg-3 col-sm-12 label-wrapper"><label for="">Insert media of the cultural heritage item</label></div>
+                                <div class="col-lg-9 col-sm-12 field-wrapper">
                                     <label for="add-image">+ Add Image</label>
                                     <input type="file" id="add-image" class="hide" />
                                 </div>
                             </div>
-                            <div class="box-button">
-                                <button onclick="window.location.href='myheritages.html'">Add Item</button>
+                            <div class="row fieldgroup group-textfield">
+                                <div class="col-lg-3 col-sm-12 label-wrapper"><label for="">Title</label></div>
+                                <div class="col-lg-9 col-sm-12 field-wrapper">
+                                    <input type="text" placeholder="" />
+                                    <div class="fieldtip">
+                                        <span>Please enter the name of the cultural heritage items in a simple way like: mona lisa painting, rodin thinking man, gobekli tepe ex: buccin trombone</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row fieldgroup group-textarea">
+                                <div class="col-lg-3 col-sm-12 label-wrapper"><label for="">Description</label></div>
+                                <div class="col-lg-9 col-sm-12 field-wrapper">
+                                    <textarea name="" id=""></textarea>
+                                    <div class="fieldtip">
+                                        <span>please enter the significance, interest details, special attributes, facts etc. of the cultural heritage item in the title buccin trombone ex: brass, stockings on main slides, bell with one coil, angled to face forwards.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row fieldgroup group-multiradios">
+                                <div class="col-lg-3 col-sm-12 label-wrapper"><label for="">subject</label></div>
+                                <div class="col-lg-9 col-sm-12 field-wrapper">
+                                    <div class="fieldtip text-center">
+                                        <span>Choose only 1 subject among 3 different cultural heritage object categories</span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-6 col-sm-12 heritage-category">
+                                            <div class="radioset-header">Movable Cultural Heritage items</div>
+                                            <div class="radio-container">
+                                                <div class="radiorow clearfix"><input type="radio" id="11" name="1" /><label for="11">Painting</label></div>
+                                                <div class="radiorow clearfix"><input type="radio" id="12" name="1" /><label for="12">Sculpture</label></div>
+                                                <div class="radiorow clearfix"><input type="radio" id="13" name="1" /><label for="13">Book/manuscript</label></div>
+                                                <div class="radiorow clearfix"><input type="radio" id="14" name="1" /><label for="14">Handcraft</label></div>
+                                                <div class="radiorow clearfix"><input type="radio" id="15" name="1" /><label for="15">archeological artifact</label></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12 heritage-category">
+                                            <div class="radioset-header">immovable cultural heritage items</div>
+                                            <div class="radio-container">
+                                                <div class="radiorow clearfix"><input type="radio" id="21" name="2" /><label for="21">Archeological site</label></div>
+                                                <div class="radiorow clearfix"><input type="radio" id="22" name="2" /><label for="22">architecture</label></div>
+                                                <div class="radiorow clearfix"><input type="radio" id="23" name="2" /><label for="23">museum</label></div>
+                                                <div class="radiorow clearfix"><input type="radio" id="24" name="2" /><label for="24">natural site</label></div>
+                                                <div class="radiorow clearfix"><input type="radio" id="25" name="2" /><label for="25">underwater site</label></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12 heritage-category">
+                                            <div class="radioset-header">intangible heritage item</div>
+                                            <div class="radio-container">
+                                                <div class="radiorow clearfix"><input type="radio" id="31" name="3" /><label for="31">oral tradition</label></div>
+                                                <div class="radiorow clearfix"><input type="radio" id="32" name="3" /><label for="32">performing art</label></div>
+                                                <div class="radiorow clearfix"><input type="radio" id="33" name="3" /><label for="33">ritual/tradition</label></div>
+                                                <div class="radiorow clearfix"><input type="radio" id="34" name="3" /><label for="34">festival/event</label></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row fieldgroup group-textfield">
+                                <div class="col-lg-3 col-sm-12 label-wrapper"><label for="">Location</label></div>
+                                <div class="col-lg-9 col-sm-12 field-wrapper">
+                                    <input type="text" placeholder="" />
+                                    <div class="fieldtip">
+                                        <span>please enter the place of the object and the time it was at that location ex; Paris, 1990; istanbul, 2010</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row fieldgroup group-textfield">
+                                <div class="col-lg-3 col-sm-12 label-wrapper"><label for="">Time</label></div>
+                                <div class="col-lg-9 col-sm-12 field-wrapper">
+                                    <input type="text" placeholder="" />
+                                    <div class="fieldtip">
+                                        <span>the date/ era of the cultural heritage item to be created ex: bc 200, 1985, helenistic era.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row fieldgroup group-selectbox">
+                                <div class="col-lg-3 col-sm-12 label-wrapper"><label for="">Provided by</label></div>
+                                <div class="col-lg-9 col-sm-12 field-wrapper">
+                                    <select name="" id="">
+                                        <option style="display: none;" disabled="disabled">Select...</option>
+                                        <option value="1">IdilGun</option>
+                                        <option value="2">AdSoyad</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row fieldgroup group-button">
+                                <div class="col-lg-3 col-sm-12 label-wrapper"><label for=""></label></div>
+                                <div class="col-lg-9 col-sm-12 field-wrapper">
+                                    <div class="box-button text-left">
+                                        <button onclick="window.location.href='myheritages.html'">Add Item</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
