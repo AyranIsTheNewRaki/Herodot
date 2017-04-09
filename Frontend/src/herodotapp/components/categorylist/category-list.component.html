@@ -1,0 +1,13 @@
+<h2>Categories</h2>
+<div class="row text-center">
+    <div *ngFor="let category of categories" class="col-md-4 col-sm-6">
+        <a href="/category/{{category.systemName}}" class="fill-div">
+            <div class="thumbnail shadowed">
+                <img class="category" src="/assets/images/categories/{{category.image}}" alt="{{category.displayName}}">
+                <div class="caption">
+                    <h2>{{category.displayName}}</h2>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
