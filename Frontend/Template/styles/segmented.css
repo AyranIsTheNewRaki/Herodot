@@ -1,0 +1,35 @@
+/* http://codepen.io/thelucid/pen/qEqeKg */
+.segmented-control {
+  display: inline-block;
+  overflow: hidden;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, .3);
+  width: 330px;
+}
+.segmented-control__item {
+  float: left;
+  list-style-type: none;
+  width: 165px;;
+}
+.segmented-control__input {
+  position: absolute;
+  visibility: hidden;
+}
+.segmented-control__label {
+  display: block;
+  padding: 1em 3em;
+  text-align: center;  
+  cursor: pointer;
+  font-size: 16px;
+  letter-spacing: 0.025em;;;
+}
+.segmented-control__item:first-child .segmented-control__label {
+  border-left-width: 0;
+  border-right: 1px solid lightgray;
+}
+.segmented-control__label:hover {
+  background: #fafafa;
+}
+.segmented-control__input:checked + .segmented-control__label {
+  background: #c26b32;
+  color: #fff;;;
+}
