@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    /*
     $('.if-tangible label').click(function () {
         $('#add-step2').hide();
         $('#add-step3').hide();
@@ -40,6 +41,7 @@ $(document).ready(function () {
             $('#add-step4').fadeIn(200);
         }
     });
+    */
     $('#radio1').click(function () {
         if ($('#radio1').is(':checked') == false) {
             $('#radio1').prop('checked', true);

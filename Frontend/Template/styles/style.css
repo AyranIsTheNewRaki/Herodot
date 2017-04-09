@@ -15,22 +15,25 @@ div.header {
     position: relative;
 }
 div.logo {
-    padding: 39px 0 66px;}
+    padding: 32px 0 60px;}
 div.logo a {}
 div.logo a img {
-    max-width: 197px;
+    max-width: 90px;
     width: 100%;}
 div.menu {
     position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 100%;}
+div.menu ul {
+    position: absolute;
     bottom: 0;
     right: 0;}
-div.menu ul {
-    float: right;}
 div.menu ul li {
     display: inline-block;
     padding: 0 72px 26px 0;}
 div.menu ul li a {;
-    color: #fff;;
+    color: #fff;
     font-weight: 600;}
 div.breadcrumbs {;
     min-height: 41px;
@@ -148,19 +151,19 @@ div.hr-2 {
 div.annotation {
     font-size: 14px;
     margin: 0;
-    padding: 16px 10px;;
+    padding: 16px 10px;
 }
 div.annotation div.title {
     font-weight: bold;
-    padding: 5px 15px;;;
+    padding: 5px 15px;
 }
 div.annotation div.date {
     color: #aaa;
     font-style: italic;
-    padding: 5px 15px;;
+    padding: 5px 15px;
 }
 div.annotation div.text {
-    padding: 15px;;}
+    padding: 15px;}
 div.annotation div.image {
     text-align: center;
 }
@@ -182,12 +185,12 @@ div.box-form-inner {
 }
 div.box-form div.form {
     background-color: #fff;
-    box-shadow: 0px 0px 3px rgba(0, 0, 0, .3);;;}
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, .3);}
 div.box-form div.form div.box-header {
     text-align: center;
     font-weight: 600;
     text-transform: uppercase;
-    padding: 16px;;}
+    padding: 16px;}
 div.box-form div.form div.box-fields {
     padding: 24px 48px 12px;}
 div.box-form div.form div.box-fields input {
@@ -227,18 +230,13 @@ div.hidden-start {
 div.fieldgroup {
     margin: 18px 0 0 !important;}
 div.fieldgroup .label-wrapper {
-    text-align: right;
-    padding-top: 8px;;}
+    padding-top: 8px;}
 div.fieldgroup .label-wrapper label {;
     font-weight: 600;
     font-size: 13px;}
 div.fieldgroup .field-wrapper {}
 div.group-selectbox {}
 div.group-selectbox .label-wrapper {}
-div.group-selectbox .field-wrapper {
-    ,: ;
-    animation: ;
-    margin: ;}
 div.group-selectbox .field-wrapper select {
     border: 1px solid #ccc;
     margin: 0;
@@ -246,19 +244,19 @@ div.group-selectbox .field-wrapper select {
     height: 37px;
     font-size: 13px;
     font-weight: normal;
-    width: 100%;;;;;;;}
+    width: 100%;}
 div.group-selectbox select.gray {
-    color: #aaa;;}
+    color: #aaa;}
 div.group-textfield {}
 div.group-textfield .label-wrapper {;}
 div.group-textfield .field-wrapper {}
 div.group-textfield .field-wrapper input {
-    margin: 0 !important;;}
+    margin: 0 !important;}
 div.group-textarea {}
 div.group-textarea .label-wrapper {}
 div.group-textarea .field-wrapper {}
-div.group-textarea .field-wrapper textarea {
-    border: 1px solid #ccc;;
+div.group-textarea .field-wrapper textarea {;
+    border: 1px solid #ccc;
     border-radius: 4px;
     width: 100%;
     min-height: 72px;
@@ -267,7 +265,7 @@ div.group-textarea .field-wrapper textarea {
 div.group-checkbox {
     margin-bottom: 24px !important;}
 div.group-checkbox .label-wrapper {}
-div.group-checkbox .field-wrapper {
+div.group-checkbox .field-wrapper {;
     padding-top: 8px;}
 div.group-fileupload {}
 div.group-fileupload .label-wrapper {}
@@ -281,3 +279,50 @@ div.group-fileupload .field-wrapper label {
 div.box-button {
     margin-top: 20px;}
 div.box-button button {}
+div.searchbox {
+    position: absolute;
+    top: 0;
+    right: 0;
+    clear: both;
+    padding: 24px 72px;
+    width: 100%; }
+div.searchbox input {
+width: 50%;;
+padding: 8px 12px;
+border: none;
+border-radius: 4px;;
+}
+div.group-th label {
+    font-size :15px !important;
+}
+div.fieldgroup div.fieldtip {
+    padding: 4px;
+}
+div.fieldgroup div.fieldtip span {
+    font-size: 12px;
+    color: gray;
+    font-style: italic;;
+}
+div.radioset-header {
+    font-size: 12px;
+    text-align: center;
+    font-weight: 600;
+    padding: 10px 0;
+    min-height: 48px;}
+div.radio-container {}
+div.radio-container div.radiorow {
+    width: 100%;
+    margin-bottom: 5px;}
+div.radio-container div.radiorow input {
+    float: left;
+    width: 12% !important;;}
+div.radio-container div.radiorow label {
+    float: left;
+    width: 88%;
+    text-align: center;
+    background-color: lightgray;
+    padding: 4px;
+    font-size: 14px;
+    border: 1px solid black;
+    border-radius: 4px;;}
+.text-left {text-align: left !important;}

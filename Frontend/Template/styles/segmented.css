@@ -8,7 +8,7 @@
 .segmented-control__item {
   float: left;
   list-style-type: none;
-  width: 165px;
+  width: 165px;;
 }
 .segmented-control__input {
   position: absolute;
@@ -20,7 +20,7 @@
   text-align: center;  
   cursor: pointer;
   font-size: 16px;
-  letter-spacing: 0.025em;
+  letter-spacing: 0.025em;;;
 }
 .segmented-control__item:first-child .segmented-control__label {
   border-left-width: 0;
@@ -31,5 +31,5 @@
 }
 .segmented-control__input:checked + .segmented-control__label {
   background: #c26b32;
-  color: #fff;
+  color: #fff;;;
 }
