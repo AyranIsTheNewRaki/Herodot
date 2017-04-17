@@ -25,6 +25,7 @@ export class UserService {
             var userInfo = new UserInfo();
             userInfo.userName = username;
             userInfo.token = "1234";
+            userInfo.id = 123;
             localStorage.setItem("currentUser", JSON.stringify(userInfo));
             this.isLoggedInSource.next(true);
             return true;
