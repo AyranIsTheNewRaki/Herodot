@@ -31,7 +31,7 @@
         </activity>
         <activity
             android:name=".addChoActivity"
-            android:label="@string/title_activity_add_cho"
+            android:label="Add New Heritage Item"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -14,17 +14,33 @@
     tools:showIn="@layout/activity_main">
 
     <EditText
+        android:id="@+id/emailField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:ems="10"
-        android:layout_below="@+id/emailField"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/usernameField"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:hint="Enter Username" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/SecondLineText"
+        android:layout_marginTop="29dp"
+        android:ems="10"
+        android:hint="Enter Email"
+        android:inputType="textEmailAddress"
+        android:textColorLink="@android:color/holo_green_light" />
+
+    <EditText
+        android:id="@+id/usernameField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/emailField"
+        android:ems="10"
+        android:hint="Enter Username"
+        android:inputType="text"
+        android:textColorLink="@android:color/holo_green_light" />
 
     <TextView
         android:text=" "
@@ -39,17 +55,18 @@
         android:layout_alignParentEnd="true" />
 
     <EditText
+        android:id="@+id/passwordField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/passwordField"
-        android:hint="Enter Password"
-        android:layout_below="@+id/usernameField"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/usernameField"
+        android:ems="10"
+        android:hint="Enter Password"
+        android:inputType="textPassword"
+        android:textColorLink="@android:color/holo_green_light" />
 
     <TextView
         android:text="Begin Annotating Today!"
@@ -60,20 +77,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:layout_marginTop="29dp"
-        android:id="@+id/emailField"
-        android:hint="Enter Email"
-        android:layout_below="@+id/SecondLineText"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 
     <Button
         android:text="SignIn"
