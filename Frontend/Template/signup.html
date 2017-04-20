@@ -34,15 +34,17 @@
         <div class="content col-lg-12">
             <div class="box box-form col-lg-6 col-md-8 col-sm-12 col-lg-offset-3 col-md-offset-2">
                 <div class="form offline-form">
+                    <form>
                     <div class="box-header hr-2">Sign Up</div>
                     <div class="box-fields">
-                        <input type="text" placeholder="Name" />
-                        <input type="email" placeholder="E-Mail" />
-                        <input type="password" placeholder="Password" />
+                        <input type="text" id="signup-name" name="signup_user_name" placeholder="Name" />
+                        <input type="email" id="signup-email" name="signup_user_email" placeholder="E-Mail" />
+                        <input type="password" id="signup-password" name="signup_user_password" placeholder="Password" />
                     </div>
                     <div class="box-button">
-                        <button onclick="window.location.href='myheritages.html'">Sign Up</button>
+                        <button type="submit">Sign Up</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
