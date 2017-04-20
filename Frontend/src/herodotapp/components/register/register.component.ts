@@ -7,7 +7,7 @@ import { UserRegistration } from '../../objects/userRegistration';
 
 @Component({
     moduleId: module.id,
-    selector: 'reg,ster',
+    selector: 'register',
     templateUrl: 'register.component.html'
 })
 export class RegisterComponent {
