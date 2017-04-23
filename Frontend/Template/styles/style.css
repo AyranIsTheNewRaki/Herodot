@@ -326,3 +326,5 @@ div.radio-container div.radiorow label {
     border: 1px solid black;
     border-radius: 4px;;}
 .text-left {text-align: left !important;}
+.small-field{margin-top:15px !important;}
+.small-field-wrapper{margin-top:20px !important;}
