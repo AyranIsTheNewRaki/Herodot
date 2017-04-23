@@ -3,19 +3,7 @@ package world.herodot.model.security;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -44,19 +32,17 @@ public class Account {
     @Size(min = 4, max = 100)
     private String password;
 
-    @Column(name = "FIRSTNAME", length = 50)
-    @NotNull
+    @Column(name = "FIRSTNAME", length = 50, nullable = true)
     @Size(min = 4, max = 50)
     private String firstname;
 
-    @Column(name = "LASTNAME", length = 50)
-    @NotNull
+    @Column(name = "LASTNAME", length = 50, nullable = true)
     @Size(min = 4, max = 50)
     private String lastname;
 
     @Column(name = "EMAIL", length = 50)
     @NotNull
-    @Size(min = 4, max = 50)
+    @Size(min = 4, max = 100)
     private String email;
 
     @Column(name = "ENABLED")
@@ -68,7 +54,7 @@ public class Account {
     @NotNull
     private Date lastPasswordResetDate;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_authority",
             joinColumns = {@JoinColumn(name = "ACCOUNT_ID", referencedColumnName = "ID")},

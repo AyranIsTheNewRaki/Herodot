@@ -10,8 +10,11 @@ import world.herodot.security.JwtUserFactory;
 import world.herodot.security.repository.UserRepository;
 
 /**
- * Created by stephan on 20.03.16.
+ * Bogazici University - Spring'17
+ * Herodot - SWE 574 Project
+ * https://github.com/AyranIsTheNewRaki/Herodot
  */
+
 @Service
 public class JwtUserDetailsServiceImpl implements UserDetailsService {
 
