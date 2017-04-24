@@ -1,7 +1,7 @@
 package world.herodot.security.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import world.herodot.model.security.User;
+import world.herodot.model.security.Account;
 
 /**
  * Bogazici University - Spring'17
@@ -9,6 +9,6 @@ import world.herodot.model.security.User;
  * https://github.com/AyranIsTheNewRaki/Herodot
  */
 
-public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUsername(String username);
+public interface UserRepository extends JpaRepository<Account, Long> {
+    Account findByUsername(String username);
 }
