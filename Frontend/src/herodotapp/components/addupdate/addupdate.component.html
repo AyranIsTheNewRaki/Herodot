@@ -45,22 +45,28 @@
                                         <div class="col-lg-4 col-md-6 col-sm-12 heritage-category">
                                             <div class="radioset-header">Movable Cultural Heritage items</div>
                                             <div class="radio-container">
-                                                <div *ngFor="let category of (categories | categoryFilter : 'Movable')" class="radiorow clearfix"><input type="radio" name="categoryGroup" value="{{category.displayName}}" [(ngModel)]="model.category" #categoryGroup="ngModel"
-                                                    required/><label for="11">{{category.displayName}}</label></div>
+                                                <div *ngFor="let category of (categories | categoryFilter : 'Movable')" class="radiorow clearfix"><input type="radio" name="categoryGroup" value="{{category.displayName}}"
+                                                        [(ngModel)]="model.category" #categoryGroup="ngModel" required/>
+                                                    <label for="11">{{category.displayName}}</label>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12 heritage-category">
                                             <div class="radioset-header">immovable cultural heritage items</div>
                                             <div class="radio-container">
-                                                <div *ngFor="let category of (categories | categoryFilter : 'Immovable')" class="radiorow clearfix"><input type="radio" name="categoryGroup" value="{{category.displayName}}" [(ngModel)]="model.category" #categoryGroup="ngModel"
-                                                    required/><label for="11">{{category.displayName}}</label></div>
+                                                <div *ngFor="let category of (categories | categoryFilter : 'Immovable')" class="radiorow clearfix"><input type="radio" name="categoryGroup" value="{{category.displayName}}"
+                                                        [(ngModel)]="model.category" #categoryGroup="ngModel" required/>
+                                                    <label for="11">{{category.displayName}}</label>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12 heritage-category">
                                             <div class="radioset-header">intangible heritage item</div>
                                             <div class="radio-container">
-                                                <div *ngFor="let category of (categories | categoryFilter : 'Intangible')" class="radiorow clearfix"><input type="radio" name="categoryGroup" value="{{category.displayName}}" [(ngModel)]="model.category" #categoryGroup="ngModel"
-                                                    required/><label for="11">{{category.displayName}}</label></div>
+                                                <div *ngFor="let category of (categories | categoryFilter : 'Intangible')" class="radiorow clearfix"><input type="radio" name="categoryGroup" value="{{category.displayName}}"
+                                                        [(ngModel)]="model.category" #categoryGroup="ngModel" required/>
+                                                    <label for="11">{{category.displayName}}</label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -81,9 +87,9 @@
                             </div>
                             <div class="row fieldgroup group-textfield">
                                 <div class="col-lg-3 col-sm-12 label-wrapper"><label for="">Time</label></div>
-                                <div class="col-lg-9 col-sm-12 field-wrapper">
-                                    <div *ngIf="model.timeLocations.length === 0">
-                                        <input class="col-sm-4" type="text" placeholder="Time" [(ngModel)]="model.time" name="time" #time="ngModel"/>
+                                <div *ngIf="model.timeLocations.length === 0">
+                                    <div class="col-lg-9 col-sm-12 field-wrapper">
+                                        <input class="col-sm-4" type="text" placeholder="Time" [(ngModel)]="model.time" name="time" #time="ngModel" />
                                         <select class="selectpicker col-sm-4" name="" [(ngModel)]="model.timeType" name="timeType" #timeType="ngModel">
                                     <option>Era</option>
                                     <option>Century</option>
@@ -91,21 +97,35 @@
                                     <option>Date</option>
                                 </select>
                                     </div>
-                                    <div *ngFor="let timeLocation of model.timeLocations">
-                                        <label>{{timeLocation.shape.identifier}}</label>
-                                        <input class="col-sm-4" type="text" placeholder="Name" [(ngModel)]="timeLocation.name" name"name_{{timeLocation.shape.identifier}}"/>
-                                        <input class="col-sm-4" type="text" placeholder="Time" [(ngModel)]="timeLocation.time" name"time_{{timeLocation.shape.identifier}}"/>
-                                        <select class="selectpicker col-sm-4" name="timeType_{{timeLocation.shape.identifier}}" [(ngModel)]="timeLocation.timeType">
-                                    <option>Era</option>
-                                    <option>Century</option>
-                                    <option>Year</option>
-                                    <option>Date</option>
-                                </select>
+                                </div>
+                                <div *ngFor="let timeLocation of model.timeLocations" class="col-lg-3 col-sm-12 field-wrapper small-field-wrapper">
+                                    <div class="col-lg-12">
+                                        {{timeLocation.shape.identifier}}:
+                                    </div>
+                                    <div class="col-lg-12 small-field">
+                                        <input type="text" placeholder="Name" [(ngModel)]="timeLocation.name" name="name_{{timeLocation.shape.identifier}}" />
+                                    </div>
+                                    <div class="col-lg-12 small-field">
+                                        <input class="col-sm-4" type="text" placeholder="Time" [(ngModel)]="timeLocation.time" name="time_{{timeLocation.shape.identifier}}"
+                                        />
+                                    </div>
+                                    <div class="col-lg-12 fieldgroup group-selectbox">
+                                        <div class="field-wrapper">
+                                            <select name="" id="">
+                                                <option style="display: none;" disabled="disabled">Select...</option>
+                                                <option>Era</option>
+                                                <option>Century</option>
+                                                <option>Year</option>
+                                                <option>Date</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 small-field box-button text-left">
                                         <button (click)="deleteShape(timeLocation.shape.id)">Delete</button>
                                     </div>
-                                    <div class="fieldtip">
-                                        <span>the date/ era of the cultural heritage item to be created ex: bc 200, 1985, helenistic era.</span>
-                                    </div>
+                                </div>
+                                <div class="fieldtip">
+                                    <span>the date/ era of the cultural heritage item to be created ex: bc 200, 1985, helenistic era.</span>
                                 </div>
                             </div>
                             <div class="row fieldgroup group-selectbox">

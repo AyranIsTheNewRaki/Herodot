@@ -11,6 +11,12 @@ import world.herodot.security.JwtUser;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Bogazici University - Spring'17
+ * Herodot - SWE 574 Project
+ * https://github.com/AyranIsTheNewRaki/Herodot
+ */
+
 @RestController
 public class UserRestController {
 

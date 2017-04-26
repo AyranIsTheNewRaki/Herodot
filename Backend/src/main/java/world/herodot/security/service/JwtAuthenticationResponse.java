@@ -3,8 +3,11 @@ package world.herodot.security.service;
 import java.io.Serializable;
 
 /**
- * Created by stephan on 20.03.16.
+ * Bogazici University - Spring'17
+ * Herodot - SWE 574 Project
+ * https://github.com/AyranIsTheNewRaki/Herodot
  */
+
 public class JwtAuthenticationResponse implements Serializable {
 
     private static final long serialVersionUID = 1250166508152483573L;

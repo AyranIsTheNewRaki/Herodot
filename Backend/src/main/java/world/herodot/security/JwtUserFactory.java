@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import world.herodot.model.security.Account;
 import world.herodot.model.security.Authority;
-import world.herodot.model.security.User;
 
 /**
  * Bogazici University - Spring'17
@@ -19,7 +19,7 @@ public final class JwtUserFactory {
     private JwtUserFactory() {
     }
 
-    public static JwtUser create(User user) {
+    public static JwtUser create(Account user) {
         return new JwtUser(
                 user.getId(),
                 user.getUsername(),
