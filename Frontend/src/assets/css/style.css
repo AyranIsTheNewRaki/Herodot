@@ -32,10 +32,10 @@ div.menu ul {
 div.menu ul li {
     display: inline-block;
     padding: 0 72px 26px 0;}
-div.menu ul li a {;
+div.menu ul li a {
     color: #fff;
     font-weight: 600;}
-div.breadcrumbs {;
+div.breadcrumbs {
     min-height: 41px;
     padding: 31px 39px;}
 div.breadcrumbs ul {
@@ -45,7 +45,7 @@ div.breadcrumbs ul {
     padding: 12px 32px;
     font-size: 16px;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, .3);}
-div.breadcrumbs ul li {;
+div.breadcrumbs ul li {
     display: inline-block;
     margin-right: 10px;}
 div.breadcrumbs ul li a {
@@ -54,7 +54,7 @@ div.breadcrumbs ul li a.active {
     text-decoration: underline;}
 div.content {
     margin-bottom: 50px;}
-div.box-grid {;
+div.box-grid {
     padding: 15px 24px 0px;}
 div.box-grid a {
     display: block;
@@ -231,7 +231,7 @@ div.fieldgroup {
     margin: 18px 0 0 !important;}
 div.fieldgroup .label-wrapper {
     padding-top: 8px;}
-div.fieldgroup .label-wrapper label {;
+div.fieldgroup .label-wrapper label {
     font-weight: 600;
     font-size: 13px;}
 div.fieldgroup .field-wrapper {}
@@ -248,14 +248,14 @@ div.group-selectbox .field-wrapper select {
 div.group-selectbox select.gray {
     color: #aaa;}
 div.group-textfield {}
-div.group-textfield .label-wrapper {;}
+div.group-textfield .label-wrapper {}
 div.group-textfield .field-wrapper {}
 div.group-textfield .field-wrapper input {
     margin: 0 !important;}
 div.group-textarea {}
 div.group-textarea .label-wrapper {}
 div.group-textarea .field-wrapper {}
-div.group-textarea .field-wrapper textarea {;
+div.group-textarea .field-wrapper textarea {
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 100%;
@@ -265,7 +265,7 @@ div.group-textarea .field-wrapper textarea {;
 div.group-checkbox {
     margin-bottom: 24px !important;}
 div.group-checkbox .label-wrapper {}
-div.group-checkbox .field-wrapper {;
+div.group-checkbox .field-wrapper {
     padding-top: 8px;}
 div.group-fileupload {}
 div.group-fileupload .label-wrapper {}
@@ -326,3 +326,5 @@ div.radio-container div.radiorow label {
     border: 1px solid black;
     border-radius: 4px;;}
 .text-left {text-align: left !important;}
+.small-field{margin-top:15px !important;}
+.small-field-wrapper{margin-top:20px !important;}
