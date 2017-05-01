@@ -1,12 +1,10 @@
 package world.herodot.security.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import world.herodot.model.security.Account;
 import world.herodot.security.service.RegistrationService;
 
@@ -16,6 +14,7 @@ import world.herodot.security.service.RegistrationService;
  * https://github.com/AyranIsTheNewRaki/Herodot
  */
 
+@CrossOrigin
 @RestController
 public class RegistrationRestController {
 
@@ -27,8 +26,8 @@ public class RegistrationRestController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> registerNewUser(@RequestBody Account account) throws IllegalAccessException {
-        Account savedAccount =  registrationService.createAccount(account);
-        return ResponseEntity.ok(savedAccount);
+    public ResponseEntity<Account> registerNewUser(@RequestBody Account account) {
+        registrationService.createAccount(account);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
