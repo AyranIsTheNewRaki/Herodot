@@ -9,5 +9,5 @@ import world.herodot.model.security.Account;
  */
 
 public interface RegistrationService {
-    Account createAccount(Account account) throws IllegalAccessException;
+    Account createAccount(Account account);
 }
