@@ -1,5 +1,6 @@
 world\herodot\security\JwtUserFactory.class
 world\herodot\security\controller\UserRestController.class
+world\herodot\rest\GreetingRestService.class
 world\herodot\security\JwtAuthenticationTokenFilter.class
 world\herodot\model\security\Authority.class
 world\herodot\repository\HeritageRepository.class
@@ -15,7 +16,6 @@ world\herodot\security\repository\UserRepository.class
 world\herodot\security\JwtAuthenticationEntryPoint.class
 world\herodot\security\service\JwtUserDetailsServiceImpl.class
 world\herodot\model\security\AuthorityName.class
-world\herodot\rest\GreetingController.class
 world\herodot\security\service\RegistrationServiceImpl.class
 world\herodot\security\controller\MethodProtectedRestController.class
 world\herodot\service\HeritageService.class

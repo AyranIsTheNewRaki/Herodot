@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-public class GreetingController {
+public class GreetingRestService {
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String getHomepage() {
