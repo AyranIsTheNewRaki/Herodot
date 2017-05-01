@@ -31,12 +31,16 @@ public class RegistrationServiceImpl implements RegistrationService {
         this.userRepository = userRepository;
     }
 
-    public Account createAccount(Account account) throws IllegalAccessException {
+    public Account createAccount(Account account) {
 
-        Account isExist = userRepository.findByUsername(account.getUsername());
+        Account isUserExist = userRepository.findByUsername(account.getUsername());
+        Account isMailExist = userRepository.findByEmail(account.getEmail());
 
-        if(isExist != null){
-            throw new IllegalAccessException(String.format("There is already an account with username '%s'. Please login.", account.getUsername()));
+        if(isUserExist != null){
+            throw new RuntimeException(String.format("There is already an account with username '%s'. Please login.", account.getUsername()));
+        }
+        else if(isMailExist != null){
+            throw new RuntimeException(String.format("There is already an account with email '%s'. Please login.", account.getEmail()));
         }
         else {
             Account accountToRegister = new Account();
