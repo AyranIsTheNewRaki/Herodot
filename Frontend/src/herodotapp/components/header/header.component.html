@@ -7,6 +7,9 @@
                 <input type="text" placeholder="Search heritage item" />
             </div>
             <ul>
+                <li>
+                    <a href="/categories">Categories</a>
+                </li>
                 <li *ngIf="!isLoggedIn">
                     <a href="/login">Login</a>
                 </li>
@@ -14,7 +17,10 @@
                     <a href="/register">Sign up</a>
                 </li>
                 <li *ngIf="isLoggedIn">
-                    <a href="/myprofile">{{username}}</a>
+                    <a href="/addupdate">Add New Item</a>
+                </li>
+                <li *ngIf="isLoggedIn">
+                    <a href="/myheritages">My Heritages</a>
                 </li>
                 <li *ngIf="isLoggedIn">
                     <a href="/login?logout">Log out</a>
