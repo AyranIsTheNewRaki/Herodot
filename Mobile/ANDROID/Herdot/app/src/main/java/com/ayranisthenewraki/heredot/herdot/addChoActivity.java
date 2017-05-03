@@ -29,11 +29,6 @@ public class addChoActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         subjectDropdown.setAdapter(adapter);
 
-        Spinner timeResDropdown = (Spinner)findViewById(R.id.timeResSpinner);
-        String[] timeItems = new String[]{"Century", "Decade", "Year", "Date (yyyy/mm/dd)"};
-        ArrayAdapter<String> timeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, timeItems);
-        timeResDropdown.setAdapter(timeAdapter);
-
         final Button button = (Button) findViewById(R.id.addTimeAndLocation);
 
         button.setOnClickListener(new View.OnClickListener(){
