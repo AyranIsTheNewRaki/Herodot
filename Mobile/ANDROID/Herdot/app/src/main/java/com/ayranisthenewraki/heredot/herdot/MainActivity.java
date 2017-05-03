@@ -1,6 +1,7 @@
 package com.ayranisthenewraki.heredot.herdot;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,8 +16,27 @@ import android.widget.TextView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
+import com.ayranisthenewraki.heredot.herdot.model.User;
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 
 public class MainActivity extends AppCompatActivity {
+
+    String APIURL = "api.herodot.world/register";
+
+    User user;
+
+    String username;
+    String password;
+    String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +61,15 @@ public class MainActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                String email = emailInput.getText().toString();
-                String username = usernameInput.getText().toString();
-                String password = passwordInput.getText().toString();
+                email = emailInput.getText().toString();
+                username = usernameInput.getText().toString();
+                password = passwordInput.getText().toString();
 
                 // make call to backend to verify user
                 if(submitButton.getText().equals("Login")){
+
+
+
 
                     if(!username.equals("idilgun") || !password.equals("123456")){
                         AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
@@ -61,12 +84,16 @@ public class MainActivity extends AppCompatActivity {
                         alertDialog.show();
                     }
                     else{
+
                         openHeritageItemsPage(view);
                     }
 
                 }
                 // make call to backend to create new user
                 else{
+
+                    new RegisterTask().execute();
+
                     openHeritageItemsPage(view);
                 }
             }
@@ -127,5 +154,65 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class RegisterTask extends AsyncTask<String, String, String>{
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            HttpURLConnection connection = null;
+            BufferedReader bufferedReader = null;
+
+            try{
+
+                URL url = new URL(APIURL);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+
+                JSONObject postDataParams = new JSONObject();
+                postDataParams.put("username", username);
+                postDataParams.put("password", password);
+                postDataParams.put("email", email);
+
+                byte[] postDataBytes = postDataParams.toString().getBytes("UTF-8");
+
+                connection.setRequestProperty("Content-Type", "application/json");
+                connection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+                connection.setDoOutput(true);
+                connection.getOutputStream().write(postDataBytes);
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
+
+                for (int c; (c = in.read()) >= 0;)
+                    System.out.print((char)c);
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }finally {
+                if(connection != null){
+                    connection.disconnect();
+                }
+                try {
+                    if(bufferedReader != null){
+                        bufferedReader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+            return null;
+        }
     }
 }
