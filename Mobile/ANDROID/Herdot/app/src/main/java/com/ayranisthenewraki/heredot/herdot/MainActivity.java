@@ -1,6 +1,7 @@
 package com.ayranisthenewraki.heredot.herdot;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -22,12 +23,15 @@ import android.widget.TextView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.widget.Toast;
+import android.view.inputmethod.InputMethodManager;
+
 
 import com.ayranisthenewraki.heredot.herdot.model.User;
 import com.ayranisthenewraki.heredot.herdot.util.NetworkManager;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -205,9 +209,30 @@ public class MainActivity extends AppCompatActivity {
                     openHeritageItemsPage(view);
 
                 } else {
+                    String message = "Something went wrong, please try again";
+                    try {
+                        EditText passwordField = (EditText)findViewById(R.id.passwordField);
+                        passwordField.setText("");
+                        EditText usernameField = (EditText)findViewById(R.id.usernameField);
+                        usernameField.setText("");
+                        String s = response.errorBody().string();
+                        if (s.contains("There is already an account")){
+                            EditText emailField = (EditText)findViewById(R.id.emailField);
+                            emailField.setText("");
+                            message = "User already exists, please go to login";
+
+                            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(passwordField.getWindowToken(), 0);
+                        }
+                        else if(s.contains("size must be between 4 and 50")){
+                            message = "Username must be at least 4 characters, please try again";
+                        }
+                    } catch (IOException e) {
+
+                    }
                     AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
                     alertDialog.setTitle("Alert");
-                    alertDialog.setMessage("Something went wrong, please try again");
+                    alertDialog.setMessage(message);
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
