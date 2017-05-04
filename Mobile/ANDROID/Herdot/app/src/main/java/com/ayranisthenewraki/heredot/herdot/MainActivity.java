@@ -1,42 +1,62 @@
 package com.ayranisthenewraki.heredot.herdot;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.widget.Toast;
 
 import com.ayranisthenewraki.heredot.herdot.model.User;
+import com.ayranisthenewraki.heredot.herdot.util.NetworkManager;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import org.json.JSONObject;
+import java.util.HashMap;
+import java.util.Map;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.jackson.JacksonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
+import retrofit2.http.Body;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    String APIURL = "api.herodot.world/register";
+    final String APIURL = "http://api.herodot.world";
 
     User user;
 
     String username;
     String password;
     String email;
+
+    boolean registered = false;
+    ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +88,6 @@ public class MainActivity extends AppCompatActivity {
                 // make call to backend to verify user
                 if(submitButton.getText().equals("Login")){
 
-
-
-
                     if(!username.equals("idilgun") || !password.equals("123456")){
                         AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
                         alertDialog.setTitle("Alert");
@@ -85,16 +102,26 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else{
 
-                        openHeritageItemsPage(view);
+                        //openHeritageItemsPage(view);
                     }
 
                 }
                 // make call to backend to create new user
                 else{
 
-                    new RegisterTask().execute();
-
-                    openHeritageItemsPage(view);
+                    if (!NetworkManager.isNetworkAvailable(MainActivity.this)) {
+                        RelativeLayout coordinatorLayout = (RelativeLayout)findViewById(R.id.content_main);
+                        Snackbar.make(coordinatorLayout,"Check internet connection",Toast.LENGTH_LONG).show();
+                    }
+                    if (progress == null) {
+                        progress = new ProgressDialog(MainActivity.this);
+                        progress.setTitle("User Registration");
+                        progress.setMessage("Please wait...");
+                    }
+                    progress.setCancelable(false);
+                    progress.show();
+                    register(view);
+                    //openHeritageItemsPage(view);
                 }
             }
         });
@@ -156,63 +183,72 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class RegisterTask extends AsyncTask<String, String, String>{
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
+    private void register(final View view){
+        final ObjectNode userJson = makeUserJson();
+        OkHttpClient client = NetworkManager.getNewClient();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(APIURL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(JacksonConverterFactory.create())
+                .client(client)
+                .build();
+        RegisterService service = retrofit.create(RegisterService.class);
+        final Call<String> reservationCall = service.completeRegistration(userJson);
 
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-        }
+        //make an asynchronous call.
+        reservationCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                progress.dismiss();
+                if (response.code() == 201) {
 
-        @Override
-        protected String doInBackground(String... strings) {
+                    openHeritageItemsPage(view);
 
-            HttpURLConnection connection = null;
-            BufferedReader bufferedReader = null;
-
-            try{
-
-                URL url = new URL(APIURL);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("POST");
-
-                JSONObject postDataParams = new JSONObject();
-                postDataParams.put("username", username);
-                postDataParams.put("password", password);
-                postDataParams.put("email", email);
-
-                byte[] postDataBytes = postDataParams.toString().getBytes("UTF-8");
-
-                connection.setRequestProperty("Content-Type", "application/json");
-                connection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
-                connection.setDoOutput(true);
-                connection.getOutputStream().write(postDataBytes);
-
-                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
-
-                for (int c; (c = in.read()) >= 0;)
-                    System.out.print((char)c);
-
-            }catch(Exception e){
-                e.printStackTrace();
-            }finally {
-                if(connection != null){
-                    connection.disconnect();
-                }
-                try {
-                    if(bufferedReader != null){
-                        bufferedReader.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } else {
+                    AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                    alertDialog.setTitle("Alert");
+                    alertDialog.setMessage("Something went wrong, please try again");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
                 }
             }
 
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                progress.dismiss();
 
-            return null;
-        }
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                alertDialog.setTitle("Alert");
+                alertDialog.setMessage("Something went wrong, please try again");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+            }
+        });
+    }
+
+    private ObjectNode makeUserJson(){
+        JsonNodeFactory factory = JsonNodeFactory.instance;
+        ObjectNode userJson = factory.objectNode();
+        userJson.put("email", email);
+        userJson.put("password", password);
+        userJson.put("username", username);
+        return userJson;
+    }
+
+    private interface RegisterService {
+
+        @Headers({"Content-Type: application/json"})
+        @POST("/register")
+        Call<String> completeRegistration(@Body ObjectNode user);
     }
 }
