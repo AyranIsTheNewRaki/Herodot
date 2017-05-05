@@ -40,7 +40,11 @@ Extensive research is done on the terminology, standards, data models, engineeri
 
 # Created by Team @AyranIsTheNewRaki, Project Name:Herodot #
 
+The link for team information could be found below:
+
 [Organization](https://github.com/orgs/AyranIsTheNewRaki/people) 
+
+
 
 [Team repository ](https://github.com/AyranIsTheNewRaki/Herodot)
 
