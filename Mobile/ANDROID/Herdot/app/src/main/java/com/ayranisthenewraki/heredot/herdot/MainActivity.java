@@ -92,10 +92,10 @@ public class MainActivity extends AppCompatActivity {
                 // make call to backend to verify user
                 if(submitButton.getText().equals("Login")){
 
-                    if(!username.equals("idilgun") || !password.equals("123456")){
+                    if(username==null || username.length()==0 || password == null || password.length() == 0){
                         AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
                         alertDialog.setTitle("Alert");
-                        alertDialog.setMessage("The username or password is incorrect");
+                        alertDialog.setMessage("Please enter both fields to continue");
                         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
@@ -105,27 +105,54 @@ public class MainActivity extends AppCompatActivity {
                         alertDialog.show();
                     }
                     else{
+                        if (!NetworkManager.isNetworkAvailable(MainActivity.this)) {
+                            RelativeLayout coordinatorLayout = (RelativeLayout)findViewById(R.id.content_main);
+                            Snackbar.make(coordinatorLayout,"Check internet connection",Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            if (progress == null) {
+                                progress = new ProgressDialog(MainActivity.this);
+                                progress.setTitle("User Login");
+                                progress.setMessage("Please wait...");
+                            }
 
-                        //openHeritageItemsPage(view);
+                            progress.setCancelable(false);
+                            progress.show();
+                            login(view);
+                        }
+
                     }
-
                 }
                 // make call to backend to create new user
                 else{
 
-                    if (!NetworkManager.isNetworkAvailable(MainActivity.this)) {
-                        RelativeLayout coordinatorLayout = (RelativeLayout)findViewById(R.id.content_main);
-                        Snackbar.make(coordinatorLayout,"Check internet connection",Toast.LENGTH_LONG).show();
+                    if(username==null || username.length()==0 || password == null || password.length() == 0 || email == null || email.length()==0){
+                        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                        alertDialog.setTitle("Alert");
+                        alertDialog.setMessage("Please fill all fields to continue");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                    }else{
+                        if (!NetworkManager.isNetworkAvailable(MainActivity.this)) {
+                            RelativeLayout coordinatorLayout = (RelativeLayout)findViewById(R.id.content_main);
+                            Snackbar.make(coordinatorLayout,"Check internet connection",Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            if (progress == null) {
+                                progress = new ProgressDialog(MainActivity.this);
+                                progress.setTitle("User Registration");
+                                progress.setMessage("Please wait...");
+                            }
+                            progress.setCancelable(false);
+                            progress.show();
+                            register(view);
+                        }
                     }
-                    if (progress == null) {
-                        progress = new ProgressDialog(MainActivity.this);
-                        progress.setTitle("User Registration");
-                        progress.setMessage("Please wait...");
-                    }
-                    progress.setCancelable(false);
-                    progress.show();
-                    register(view);
-                    //openHeritageItemsPage(view);
                 }
             }
         });
@@ -165,8 +192,9 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void openHeritageItemsPage(View view) {
+    public void openHeritageItemsPage(View view, String userToken) {
         Intent intent = new Intent(this, HeritageItemHomepageActivity.class);
+        intent.putExtra("userToken", userToken);
         startActivity(intent);
     }
 
@@ -206,8 +234,7 @@ public class MainActivity extends AppCompatActivity {
                 progress.dismiss();
                 if (response.code() == 201) {
 
-                    openHeritageItemsPage(view);
-
+                    login(view);
                 } else {
                     String message = "Something went wrong, please try again";
                     try {
@@ -264,7 +291,9 @@ public class MainActivity extends AppCompatActivity {
     private ObjectNode makeUserJson(){
         JsonNodeFactory factory = JsonNodeFactory.instance;
         ObjectNode userJson = factory.objectNode();
-        userJson.put("email", email);
+        if(email!=null && email.length()>0){
+            userJson.put("email", email);
+        }
         userJson.put("password", password);
         userJson.put("username", username);
         return userJson;
@@ -275,5 +304,102 @@ public class MainActivity extends AppCompatActivity {
         @Headers({"Content-Type: application/json"})
         @POST("/register")
         Call<String> completeRegistration(@Body ObjectNode user);
+    }
+
+    private void login(final View view){
+        final ObjectNode userJson = makeUserJson();
+        OkHttpClient client = NetworkManager.getNewClient();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(APIURL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(JacksonConverterFactory.create())
+                .client(client)
+                .build();
+        LoginService service = retrofit.create(LoginService.class);
+        final Call<ObjectNode> loginCall = service.login(userJson);
+
+        //make an asynchronous call.
+        loginCall.enqueue(new Callback<ObjectNode>() {
+            @Override
+            public void onResponse(Call<ObjectNode> call, Response<ObjectNode> response) {
+                progress.dismiss();
+                if (response.code() == 200) {
+                    String userToken = response.body().get("token").asText();
+                    openHeritageItemsPage(view, userToken);
+
+                } else if(response.code() == 401){
+                    EditText passwordField = (EditText)findViewById(R.id.passwordField);
+                    passwordField.setText("");
+                    EditText usernameField = (EditText)findViewById(R.id.usernameField);
+                    usernameField.setText("");
+                    AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                    alertDialog.setTitle("Alert");
+                    alertDialog.setMessage("The username or password is incorrect, please try again");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                }
+                else {
+                    String message = "Something went wrong, please try again";
+                    try {
+                        EditText passwordField = (EditText)findViewById(R.id.passwordField);
+                        passwordField.setText("");
+                        EditText usernameField = (EditText)findViewById(R.id.usernameField);
+                        usernameField.setText("");
+                        String s = response.errorBody().string();
+                        if (s.contains("There is already an account")){
+                            EditText emailField = (EditText)findViewById(R.id.emailField);
+                            emailField.setText("");
+                            message = "User already exists, please go to login";
+
+                            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(passwordField.getWindowToken(), 0);
+                        }
+                        else if(s.contains("size must be between 4 and 50")){
+                            message = "Username must be at least 4 characters, please try again";
+                        }
+                    } catch (IOException e) {
+
+                    }
+                    AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                    alertDialog.setTitle("Alert");
+                    alertDialog.setMessage(message);
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ObjectNode> call, Throwable t) {
+                progress.dismiss();
+
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                alertDialog.setTitle("Alert");
+                alertDialog.setMessage("Something went wrong, please try again");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+            }
+        });
+    }
+
+    private interface LoginService {
+
+        @Headers({"Content-Type: application/json"})
+        @POST("/auth")
+        Call<ObjectNode> login(@Body ObjectNode user);
     }
 }

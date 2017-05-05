@@ -61,6 +61,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ayranisthenewraki.heredot.herdot.addChoActivity" />
         </activity>
+        <activity
+            android:name=".MapSelectionActivity"
+            android:label="@string/title_activity_map_selection"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
