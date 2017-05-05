@@ -23,8 +23,6 @@ public class HeritageItemHomepageActivity extends AppCompatActivity {
 
         final Button newChoButton = (Button) findViewById(R.id.newChoButton);
 
-        String userToken  = getIntent().getStringExtra("userToken");
-
         newChoButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -36,6 +34,8 @@ public class HeritageItemHomepageActivity extends AppCompatActivity {
 
     public void openAddChoPage(View view) {
         Intent intent = new Intent(this, addChoActivity.class);
+        String userToken  = getIntent().getStringExtra("userToken");
+        intent.putExtra("userToken", userToken);
         startActivity(intent);
     }
 
