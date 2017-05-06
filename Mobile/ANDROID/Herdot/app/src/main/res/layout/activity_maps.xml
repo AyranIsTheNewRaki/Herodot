@@ -54,6 +54,15 @@
             android:layout_alignBaseline="@id/timeString"
             android:layout_toRightOf="@id/timeString"
             android:drawSelectorOnTop="true" />
+
+        <fragment
+            android:id="@+id/place_autocomplete_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="90dp"
+            android:name="com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment"
+            />
+
     </RelativeLayout>
 
     <LinearLayout

@@ -13,17 +13,25 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -59,11 +67,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFrag.getMapAsync(this);
 
-        Spinner timeResDropdown = (Spinner)findViewById(R.id.timeResSpinner);
-        String[] timeItems = new String[]{"Century", "Decade", "Year", "Date"};
-        ArrayAdapter<String> timeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, timeItems);
-        timeResDropdown.setAdapter(timeAdapter);
-
         final Button markerToggle = (Button) findViewById(R.id.pinDropper);
 
         markerToggle.setOnClickListener(new View.OnClickListener(){
@@ -83,6 +86,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        EditText nameInput = (EditText) findViewById(R.id.dateTimeName);
+        final EditText timeInput = (EditText) findViewById(R.id.timeString);
+        final Spinner timeResDropdown = (Spinner)findViewById(R.id.timeResSpinner);
+
+        String[] timeItems = new String[]{"Century", "Decade", "Year", "Date"};
+        ArrayAdapter<String> timeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, timeItems);
+        timeResDropdown.setAdapter(timeAdapter);
+
+        timeResDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                if(timeResDropdown.getSelectedItemPosition()==0)
+                    timeInput.setHint("19th");
+                else if(timeResDropdown.getSelectedItemPosition()==1)
+                    timeInput.setHint("1970s");
+                else if(timeResDropdown.getSelectedItemPosition()==2)
+                    timeInput.setHint("2015");
+                else if(timeResDropdown.getSelectedItemPosition()==3)
+                    timeInput.setHint("27/03/2016");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
     }
 
     private void drawCircle(){
@@ -109,6 +139,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addCircle(circleOptions);
 
     }
+
+
 
 
     /**
@@ -211,6 +243,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     cirlceAdded = false;
                     mMap.addMarker(new MarkerOptions().position(point));
                 }
+            }
+        });
+
+        SupportPlaceAutocompleteFragment autocompleteFragment = (SupportPlaceAutocompleteFragment)
+                getSupportFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                mMap.clear();
+                selectedPoint = place.getLatLng();
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(selectedPoint));
+                mMap.addMarker(new MarkerOptions().position(selectedPoint));
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                System.out.println("An error occurred: " + status);
             }
         });
     }
