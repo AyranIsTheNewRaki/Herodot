@@ -28,17 +28,24 @@ export class UserService implements CanActivate {
     this.isLoggedInSource.next(false);
   }
 
-  tryLogin(username: string, password: string): boolean {
-    if (username === "TestUser" && password === "123") {
-      var userInfo = new UserInfo();
-      userInfo.userName = username;
-      userInfo.token = "1234";
-      userInfo.id = 123;
-      localStorage.setItem("currentUser", JSON.stringify(userInfo));
-      this.isLoggedInSource.next(true);
-      return true;
-    }
-    return false;
+  tryLogin(username: string, password: string): Observable<UserInfo> {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post('http://api.herodot.world/auth', JSON.stringify({ username: username, password: password }), options)
+      .map((response: Response) => {
+        console.log("Response => " + response.json());
+        let res = response.json();
+        if (res && res.token) {
+          var userInfo = new UserInfo();
+          userInfo.userName = username;
+          userInfo.token = res.token;
+          localStorage.setItem('currentUser', JSON.stringify(userInfo));
+          this.isLoggedInSource.next(true);
+          return userInfo;
+        } else {
+          return null;
+        }
+      });
   }
 
   isLoggedIn(): boolean {
