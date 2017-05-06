@@ -5,7 +5,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -22,15 +28,23 @@ import android.widget.Toast;
 import com.ayranisthenewraki.heredot.herdot.model.CulturalHeritageObject;
 import com.ayranisthenewraki.heredot.herdot.model.TimeLocationCouple;
 import com.ayranisthenewraki.heredot.herdot.util.NetworkManager;
+import com.cloudinary.Cloudinary;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Time;
 import java.text.Normalizer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -50,6 +64,7 @@ public class addChoActivity extends AppCompatActivity {
 
     final String APIURL = "http://api.herodot.world";
     static final int ADD_TIME_LOCATION_REQUEST = 1;
+    static final int REQUEST_IMAGE_CAPTURE = 2;
 
     static final char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
 
@@ -60,6 +75,11 @@ public class addChoActivity extends AppCompatActivity {
     String category = "";
 
     String userToken ="";
+
+    Bitmap imageBitmap;
+
+    File photoFile = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +102,17 @@ public class addChoActivity extends AppCompatActivity {
             public void onClick(View view){
 
                 openMapsView(view);
+
+            }
+        });
+
+        final Button viewTimeLocation = (Button) findViewById(R.id.viewTimeLocation);
+
+        viewTimeLocation.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+
+                dispatchTakePictureIntent();
 
             }
         });
@@ -162,6 +193,11 @@ public class addChoActivity extends AppCompatActivity {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
 
+                Button viewTimeLocation = (Button) findViewById(R.id.viewTimeLocation);
+                if(viewTimeLocation.getVisibility()==View.INVISIBLE){
+                    viewTimeLocation.setVisibility(View.VISIBLE);
+                }
+
                 Bundle bundle = data.getExtras();
 
                 TimeLocationCouple tlc = (TimeLocationCouple)bundle.getSerializable("timeLocation");
@@ -177,6 +213,14 @@ public class addChoActivity extends AppCompatActivity {
 
                 // Do something with the contact here (bigger example below)
             }
+        }
+
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            imageBitmap = (Bitmap) extras.get("data");
+            ImageView mImageView = (ImageView) findViewById(R.id.imageView2);
+            mImageView.setImageBitmap(imageBitmap);
+
         }
     }
 
@@ -195,6 +239,14 @@ public class addChoActivity extends AppCompatActivity {
         cho.setDescription(description);
         cho.setTitle(title);
         cho.setTimeLocations(stringTlcList);
+
+        if(imageBitmap!=null){
+            String url = sendImageToServer();
+            if(url!=null){
+                cho.setImageUrl(url);
+            }
+
+        }
 
         String json = gson.toJson(cho);
         json = Normalizer.normalize(json, Normalizer.Form.NFD);
@@ -265,6 +317,61 @@ public class addChoActivity extends AppCompatActivity {
         Intent intent = new Intent(this, HeritageItemHomepageActivity.class);
         intent.putExtra("userToken", userToken);
         startActivity(intent);
+    }
+
+
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "culturalHeritageImage";
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                this.getCacheDir()      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        return image;
+    }
+
+
+
+    private String sendImageToServer(){
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+        try{
+            File file = createImageFile();
+            FileOutputStream fOut = new FileOutputStream(file);
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 10, fOut); // saving the Bitmap to a file compressed as a JPEG with 85% compression rate
+            fOut.flush(); // Not really required
+            fOut.close(); // do not forget to close the stream
+
+            MediaStore.Images.Media.insertImage(getContentResolver(),file.getAbsolutePath(),file.getName(),file.getName());
+
+            Map config = new HashMap();
+            config.put("cloud_name", "dxkj4gojg");
+            config.put("api_key", "684449743758261");
+            config.put("api_secret", "8VI0mZY_ezLg1wwdOJU589d5Rb0");
+            Cloudinary cloudinary = new Cloudinary(config);
+
+            Map uploadResult = cloudinary.uploader().upload(file.getAbsolutePath(), Cloudinary.asMap());
+
+            Object url = uploadResult.get("url");
+            return url.toString();
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

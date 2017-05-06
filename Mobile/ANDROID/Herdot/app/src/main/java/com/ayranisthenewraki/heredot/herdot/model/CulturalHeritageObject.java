@@ -13,6 +13,7 @@ public class CulturalHeritageObject {
     private String description;
     private String category;
     private List<String> timeLocations;
+    private String imageUrl;
 
     public String getTitle() {
         return title;
@@ -44,5 +45,13 @@ public class CulturalHeritageObject {
 
     public void setTimeLocations(List<String> timeLocations) {
         this.timeLocations = timeLocations;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
