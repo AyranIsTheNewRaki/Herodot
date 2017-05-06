@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
+import { Http, Headers, Response, RequestOptions } from '@angular/http';
+import 'rxjs/add/operator/map'
 
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Rx';
@@ -13,6 +15,10 @@ export class UserService implements CanActivate {
 
   private isLoggedInSource = new Subject<boolean>();
 
+  constructor(private http: Http) {
+
+  }
+
   getUser(): UserInfo {
     return <UserInfo>JSON.parse(localStorage.getItem("currentUser"));
   }
@@ -24,13 +30,13 @@ export class UserService implements CanActivate {
 
   tryLogin(username: string, password: string): boolean {
     if (username === "TestUser" && password === "123") {
-        var userInfo = new UserInfo();
-        userInfo.userName = username;
-        userInfo.token = "1234";
-        userInfo.id = 123;
-        localStorage.setItem("currentUser", JSON.stringify(userInfo));
-        this.isLoggedInSource.next(true);
-        return true;
+      var userInfo = new UserInfo();
+      userInfo.userName = username;
+      userInfo.token = "1234";
+      userInfo.id = 123;
+      localStorage.setItem("currentUser", JSON.stringify(userInfo));
+      this.isLoggedInSource.next(true);
+      return true;
     }
     return false;
   }
@@ -45,11 +51,10 @@ export class UserService implements CanActivate {
     return this.isLoggedInSource.asObservable();
   }
 
-  register(model: UserRegistration): OperationResponse{
-    if(model.username === "fail"){
-      return new OperationResponse(false, "Username is fail!");
-    }
-    return new OperationResponse(true);
+  register(model: UserRegistration) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post('http://api.herodot.world/register', JSON.stringify({ username: model.username, password: model.password, email: model.email }), options);
   }
 
   canActivate() {
