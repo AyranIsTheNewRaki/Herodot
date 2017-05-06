@@ -1,8 +1,8 @@
-package world.herodot.security.repository;
+package world.herodot.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import world.herodot.model.security.Account;
+import world.herodot.model.Heritage;
 
 /**
  * Bogazici University - Spring'17
@@ -11,7 +11,5 @@ import world.herodot.model.security.Account;
  */
 
 @Repository
-public interface UserRepository extends JpaRepository<Account, Long> {
-    Account findByUsername(String username);
-    Account findByEmail(String email);
+public interface HeritageRepository extends JpaRepository<Heritage, Long> {
 }

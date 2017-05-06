@@ -3,6 +3,7 @@ package world.herodot.security.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +12,13 @@ import world.herodot.security.JwtUser;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Bogazici University - Spring'17
+ * Herodot - SWE 574 Project
+ * https://github.com/AyranIsTheNewRaki/Herodot
+ */
+
+@CrossOrigin
 @RestController
 public class UserRestController {
 

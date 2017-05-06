@@ -58,11 +58,10 @@ export class UserService implements CanActivate {
     return this.isLoggedInSource.asObservable();
   }
 
-  register(model: UserRegistration): OperationResponse {
-    if (model.username === "fail") {
-      return new OperationResponse(false, "Username is fail!");
-    }
-    return new OperationResponse(true);
+  register(model: UserRegistration) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post('http://api.herodot.world/register', JSON.stringify({ username: model.username, password: model.password, email: model.email }), options);
   }
 
   canActivate() {
