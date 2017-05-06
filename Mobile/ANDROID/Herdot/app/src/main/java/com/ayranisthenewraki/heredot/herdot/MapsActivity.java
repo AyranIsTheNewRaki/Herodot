@@ -2,6 +2,7 @@ package com.ayranisthenewraki.heredot.herdot;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -22,6 +23,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.ayranisthenewraki.heredot.herdot.model.Center;
+import com.ayranisthenewraki.heredot.herdot.model.ShapeDetail;
+import com.ayranisthenewraki.heredot.herdot.model.ShapeIdentifier;
+import com.ayranisthenewraki.heredot.herdot.model.TimeLocationCouple;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
@@ -56,7 +61,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     boolean cirlceSelected = false;
     boolean cirlceAdded = false;
     LatLng selectedPoint;
-    Integer radius = 50;
+    Double radius = 50.0;
+
+    String timeLocationName = "";
+    String timeText = "";
+    String timeResolution = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +95,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        EditText nameInput = (EditText) findViewById(R.id.dateTimeName);
+        final EditText nameInput = (EditText) findViewById(R.id.dateTimeName);
         final EditText timeInput = (EditText) findViewById(R.id.timeString);
         final Spinner timeResDropdown = (Spinner)findViewById(R.id.timeResSpinner);
 
@@ -113,6 +122,60 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
         });
+
+        final Button addTimeLocationButton = (Button) findViewById(R.id.addTimeLocationCouple);
+
+        addTimeLocationButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+
+                timeLocationName = nameInput.getText().toString();
+                timeText = timeInput.getText().toString();
+                timeResolution = timeResDropdown.getSelectedItem().toString();
+                if(timeLocationName.length()==0 || timeText.length()==0){
+                    android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(MapsActivity.this).create();
+                    alertDialog.setTitle("Alert");
+                    alertDialog.setMessage("Please fill all fields to continue");
+                    alertDialog.setButton(android.app.AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                }
+                else{
+                    TimeLocationCouple tlc = new TimeLocationCouple();
+                    tlc.setName(timeLocationName);
+                    tlc.setTime(timeText);
+                    tlc.setTimeType(timeResolution);
+                    ShapeIdentifier shapeId = new ShapeIdentifier();
+                    shapeId.setType(0);
+                    ShapeDetail shape = new ShapeDetail();
+                    shape.setRadius(radius);
+                    Center center = new Center();
+                    center.setLat(selectedPoint.latitude);
+                    center.setLng(selectedPoint.longitude);
+                    shape.setCenter(center);
+                    shapeId.setShape(shape);
+                    tlc.setShape(shapeId);
+
+                    goBackToAddItemView(view, tlc);
+                }
+
+            }
+        });
+
+    }
+
+    public void goBackToAddItemView(View view, TimeLocationCouple tlc) {
+        Intent intent = new Intent();
+        intent.putExtra("userToken", intent.getStringExtra("userToken"));
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("timeLocation", tlc);
+        intent.putExtras(bundle);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     private void drawCircle(){
@@ -198,7 +261,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     int image_resid = getApplicationContext().getResources().getIdentifier("circle_selected", "drawable", getApplicationContext().getPackageName());
                     circleTool.setBackgroundResource(image_resid);
                     if(!cirlceAdded){
-                        radius = 50;
+                        radius = 50.0;
                         drawCircle();
                         cirlceAdded = true;
                     }
