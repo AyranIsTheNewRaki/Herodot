@@ -31,8 +31,14 @@ export class LoginComponent {
         this.loading = false;
       }
     }, error => {
-      this.alertService.error("Invalid username or password! => " + error);
-      this.loading = false;
+      if (error.status === 401) {
+        this.alertService.error("Invalid username or password!");
+        this.loading = false;
+      }
+      else {
+        this.alertService.error("Error => " + error);
+        this.loading = false;
+      }
     });
   }
 }
