@@ -1,6 +1,8 @@
 package com.ayranisthenewraki.heredot.herdot;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,23 +11,44 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.ayranisthenewraki.heredot.herdot.model.CulturalHeritageObject;
 import com.ayranisthenewraki.heredot.herdot.model.TimeLocationCouple;
+import com.ayranisthenewraki.heredot.herdot.util.NetworkManager;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.sql.Time;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.jackson.JacksonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
+import retrofit2.http.Body;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
+
 public class addChoActivity extends AppCompatActivity {
 
+    ProgressDialog progress;
+
+    final String APIURL = "http://api.herodot.world";
     static final int ADD_TIME_LOCATION_REQUEST = 1;
 
     static final char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
@@ -35,6 +58,8 @@ public class addChoActivity extends AppCompatActivity {
     String title = "";
     String description = "";
     String category = "";
+
+    String userToken ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +95,8 @@ public class addChoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
 
+                userToken = getIntent().getStringExtra("userToken");
+
                 title = titleField.getText().toString();
                 description = descriptionField.getText().toString();
                 category = subjectDropdown.getSelectedItem().toString();
@@ -99,7 +126,21 @@ public class addChoActivity extends AppCompatActivity {
                     alertDialog.show();
                 }
                 else{
-                    addChoObject(view);
+                    if (!NetworkManager.isNetworkAvailable(addChoActivity.this)) {
+                        RelativeLayout coordinatorLayout = (RelativeLayout)findViewById(R.id.content_add_cho);
+                        Snackbar.make(coordinatorLayout,"Check internet connection", Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        if (progress == null) {
+                            progress = new ProgressDialog(addChoActivity.this);
+                            progress.setTitle("Adding Cultural Heritage Object");
+                            progress.setMessage("Please wait...");
+                        }
+
+                        progress.setCancelable(false);
+                        progress.show();
+                        addChoObject(view);
+                    }
                 }
 
 
@@ -111,7 +152,6 @@ public class addChoActivity extends AppCompatActivity {
     public void openMapsView(View view) {
 
         Intent intent = new Intent(this, MapsActivity.class);
-        intent.putExtra("userToken", intent.getStringExtra("userToken"));
         startActivityForResult(intent, ADD_TIME_LOCATION_REQUEST);
     }
 
@@ -140,7 +180,7 @@ public class addChoActivity extends AppCompatActivity {
         }
     }
 
-    private void addChoObject(View view){
+    private void addChoObject(final View view){
 
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 
@@ -159,7 +199,72 @@ public class addChoActivity extends AppCompatActivity {
         String json = gson.toJson(cho);
         json = Normalizer.normalize(json, Normalizer.Form.NFD);
 
-        System.out.print(json);
+        OkHttpClient client = NetworkManager.getNewClient();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(APIURL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(JacksonConverterFactory.create())
+                .client(client)
+                .build();
+
+        AddChoService addChoService = retrofit.create(AddChoService.class);
+        final Call<String> addChoCall =  addChoService.addCHO(json, userToken);
+
+        addChoCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                progress.dismiss();
+                if (response.code() == 201) {
+
+                    openHeritageItemsPage(view);
+
+                } else {
+                    String message = "Something went wrong, please try again";
+
+                    AlertDialog alertDialog = new AlertDialog.Builder(addChoActivity.this).create();
+                    alertDialog.setTitle("Alert");
+                    alertDialog.setMessage(message);
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                progress.dismiss();
+
+                AlertDialog alertDialog = new AlertDialog.Builder(addChoActivity.this).create();
+                alertDialog.setTitle("Alert");
+                alertDialog.setMessage("Something went wrong, please try again");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+            }
+        });
+
+    }
+
+    private interface AddChoService {
+
+        @Headers({"Content-Type: application/json"})
+        @POST("/heritage")
+        Call<String> addCHO(@Body String json, @Header("Authorization") String authKey);
+    }
+
+    public void openHeritageItemsPage(View view) {
+        Intent intent = new Intent(this, HeritageItemHomepageActivity.class);
+        intent.putExtra("userToken", userToken);
+        startActivity(intent);
     }
 
 }
