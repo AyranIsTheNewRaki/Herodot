@@ -27,18 +27,24 @@ Extensive research is done on the terminology, standards, data models, engineeri
 
 [Research on annotations, annotation data model, standards etc. ](https://github.com/AyranIsTheNewRaki/Herodot/wiki/Research-on-web-annotation,-data-model,-standards-etc.)
 
+# API
+
+- [API Documentation](https://github.com/AyranIsTheNewRaki/Herodot/wiki/API-Documentation)
+- URL: [api.herodot.world](http://api.herodot.world)
 
 # Mockups
 - [Web app mock up v2](https://invis.io/BPAQ32HEG)
 - [Mobile app mock up v2](https://invis.io/B8APVG6VG) 
 - [Web mockup v3 editable](https://drive.google.com/file/d/0B-1y2ZQCjTGvSG5Bd2RSd1hxajA/view?usp=sharing) 
-- [Web mockup v3 published](https://www.draw.io/?lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1&title=V3Copy%20of%20herodotHome1.xml#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D0B-1y2ZQCjTGvSG5Bd2RSd1hxajA%26export%3Ddownload) 
-
-
+- [Web mockup v3 published](https://www.draw.io/?lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1&title=V3Copy%20of%20herodotHome1.xml#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D0B-1y2ZQCjTGvSG5Bd2RSd1hxajA%26export%3Ddownload)
 
 # Created by Team @AyranIsTheNewRaki, Project Name:Herodot #
 
+The link for team information could be found below:
+
 [Organization](https://github.com/orgs/AyranIsTheNewRaki/people) 
+
+The link for the Herodot Repository could be found below:
 
 [Team repository ](https://github.com/AyranIsTheNewRaki/Herodot)
 

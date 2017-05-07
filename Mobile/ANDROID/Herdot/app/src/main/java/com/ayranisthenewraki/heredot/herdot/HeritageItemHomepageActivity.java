@@ -34,6 +34,8 @@ public class HeritageItemHomepageActivity extends AppCompatActivity {
 
     public void openAddChoPage(View view) {
         Intent intent = new Intent(this, addChoActivity.class);
+        String userToken  = getIntent().getStringExtra("userToken");
+        intent.putExtra("userToken", userToken);
         startActivity(intent);
     }
 

@@ -24,23 +24,22 @@
         android:layout_alignParentTop="true"
         android:ems="10"
         android:hint="Title"
-        android:inputType="text"
+        android:inputType="textCapWords|textNoSuggestions"
         android:textColorLink="@android:color/holo_orange_light" />
 
     <EditText
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/addTimeAndLocation"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/title"
-        android:layout_marginTop="13dp"
         android:ems="10"
         android:gravity="top|left"
         android:hint="Description"
-        android:inputType="textMultiLine"
+        android:inputType="textCapSentences|textMultiLine|textNoSuggestions"
         android:lines="3"
         android:scrollHorizontally="false"
         android:textColorLink="@android:color/holo_orange_light" />
@@ -49,58 +48,57 @@
         android:id="@+id/subjectSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/description"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/description"
-        android:layout_marginTop="10dp" />
-
-    <EditText
-        android:id="@+id/Location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/subjectSpinner"
-        android:layout_marginTop="30dp"
-        android:ems="10"
-        android:hint="Location"
-        android:inputType="text"
-        android:textColorLink="@android:color/holo_orange_light" />
-
-    <EditText
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/Location"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="Time"
-        android:inputType="text"
-        android:textColorLink="@android:color/holo_orange_light" />
-
-    <Spinner
-        android:id="@+id/timeResSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/time"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/addChoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@android:color/holo_orange_dark"
+        android:text="Add Heritage Item"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/addTimeAndLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/addChoButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="13dp"
+        android:background="@android:color/holo_green_light"
+        android:text="Add Time and Location"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/viewTimeLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/addTimeAndLocation"
+        android:layout_alignBottom="@+id/addTimeAndLocation"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/holo_green_light"
+        android:text="VIEW TIME and LOCATION"
+        android:textSize="12sp"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/placeholder"
+        android:layout_below="@+id/title"
+        android:layout_above="@+id/subjectSpinner"
+        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="58dp"
-        android:background="@android:color/holo_orange_dark"
-        android:text="Add Heritage Item" />
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
