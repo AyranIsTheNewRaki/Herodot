@@ -75,6 +75,7 @@ public class HeritageServiceImpl implements HeritageService{
         heritageToUpdate.setCategory(heritage.getCategory());
         heritageToUpdate.setDescription(heritage.getDescription());
         heritageToUpdate.setTitle(heritage.getTitle());
+        heritageToUpdate.setImageUrl(heritage.getImageUrl());
         heritageToUpdate.setTimeLocations(heritage.getTimeLocations());
 
         return heritageRepository.save(heritageToUpdate);
