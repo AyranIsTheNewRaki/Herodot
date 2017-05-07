@@ -1,0 +1,122 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MapsActivity">
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.ayranisthenewraki.heredot.herdot.MapsActivity" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_green_light"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/dateTimeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="90dp"
+            android:ems="10"
+            android:hint="Name"
+            android:inputType="text"
+            android:textColorLink="@android:color/holo_green_light" />
+
+        <EditText
+            android:id="@+id/timeString"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_below="@+id/dateTimeName"
+            android:layout_marginTop="40dp"
+            android:ems="10"
+            android:hint="Time"
+            android:inputType="text"
+            android:textColorLink="@android:color/holo_green_light" />
+
+
+
+        <Spinner
+            android:id="@+id/timeResSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/timeString"
+            android:layout_toRightOf="@id/timeString"
+            android:drawSelectorOnTop="true" />
+
+        <fragment
+            android:id="@+id/place_autocomplete_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:name="com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment"
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/pinDropper"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/pin" />
+
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/circleTool"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/circle" />
+
+                <Button
+                    android:id="@+id/decreaseRadius"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/minus_circle"
+                    android:visibility="invisible" />
+
+                <Button
+                    android:id="@+id/increaseRadius"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/plus_circle"
+                    android:visibility="invisible" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/addTimeLocationCouple"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pinDropper"
+                android:background="@android:color/holo_green_light"
+                android:text="ADD TIME and LOCATION" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>
