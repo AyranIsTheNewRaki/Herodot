@@ -14,27 +14,31 @@ export class LoginComponent {
   returnUrl: string;
   loading = false;
 
-  constructor(private route: ActivatedRoute, private router: Router,private userService: UserService, private alertService: AlertService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private userService: UserService, private alertService: AlertService) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.userService.logout();
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'home';
   }
 
   login(): void {
-    console.log('login 1');
     this.loading = true;
-    if(this.userService.tryLogin(this.model.username, this.model.password)){
-      console.log('login 2');
-      if(this.returnUrl) {
-        console.log('login 3', this.returnUrl);
+    this.userService.tryLogin(this.model.username, this.model.password).subscribe(data => {
+      if (data != null) {
         this.router.navigate([this.returnUrl]);
+      } else {
+        this.alertService.error("Invalid username or password!");
+        this.loading = false;
       }
-    }
-    else {
-      console.log('login 4');
-      this.alertService.error("Invalid username or password!");
-      this.loading = false;
-    }
+    }, error => {
+      if (error.status === 401) {
+        this.alertService.error("Invalid username or password!");
+        this.loading = false;
+      }
+      else {
+        this.alertService.error("Error => " + error);
+        this.loading = false;
+      }
+    });
   }
 }

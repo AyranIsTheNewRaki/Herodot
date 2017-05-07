@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.ayranisthenewraki.heredot.herdot.model.CulturalHeritageObject;
 import com.ayranisthenewraki.heredot.herdot.model.TimeLocationCouple;
+import com.ayranisthenewraki.heredot.herdot.model.TimeLocationListWrapper;
 import com.ayranisthenewraki.heredot.herdot.util.NetworkManager;
 import com.cloudinary.Cloudinary;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -65,6 +66,7 @@ public class addChoActivity extends AppCompatActivity {
     final String APIURL = "http://api.herodot.world";
     static final int ADD_TIME_LOCATION_REQUEST = 1;
     static final int REQUEST_IMAGE_CAPTURE = 2;
+    static final int VIEW_TIME_LOCATION_REQUEST = 3;
 
     static final char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
 
@@ -108,7 +110,19 @@ public class addChoActivity extends AppCompatActivity {
 
         final Button viewTimeLocation = (Button) findViewById(R.id.viewTimeLocation);
 
+
         viewTimeLocation.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+
+                openMapsViewAllActivity(view);
+
+            }
+        });
+
+        final Button cameraButton = (Button) findViewById(R.id.cameraButton);
+
+        cameraButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
 
@@ -184,6 +198,16 @@ public class addChoActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, MapsActivity.class);
         startActivityForResult(intent, ADD_TIME_LOCATION_REQUEST);
+    }
+
+    public void openMapsViewAllActivity(View view){
+        Intent intent = new Intent(this, MapsViewAllActivity.class);
+        Bundle bundle = new Bundle();
+        TimeLocationListWrapper tlcListWrapper = new TimeLocationListWrapper();
+        tlcListWrapper.setTlcList(tlcList);
+        bundle.putSerializable("timeLocationList", tlcListWrapper);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, VIEW_TIME_LOCATION_REQUEST);
     }
 
     @Override
@@ -352,7 +376,7 @@ public class addChoActivity extends AppCompatActivity {
         try{
             File file = createImageFile();
             FileOutputStream fOut = new FileOutputStream(file);
-            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 10, fOut); // saving the Bitmap to a file compressed as a JPEG with 85% compression rate
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 90, fOut); // saving the Bitmap to a file compressed as a JPEG with 85% compression rate
             fOut.flush(); // Not really required
             fOut.close(); // do not forget to close the stream
 
