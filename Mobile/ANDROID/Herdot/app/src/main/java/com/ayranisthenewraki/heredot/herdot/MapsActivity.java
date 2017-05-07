@@ -150,14 +150,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     tlc.setTime(timeText);
                     tlc.setTimeType(timeResolution);
                     ShapeIdentifier shapeId = new ShapeIdentifier();
-                    shapeId.setType(0);
-                    ShapeDetail shape = new ShapeDetail();
-                    shape.setRadius(radius);
-                    Center center = new Center();
-                    center.setLat(selectedPoint.latitude);
-                    center.setLng(selectedPoint.longitude);
-                    shape.setCenter(center);
-                    shapeId.setShape(shape);
+                    shapeId.setLng(selectedPoint.longitude);
+                    shapeId.setLat(selectedPoint.latitude);
+                    if(cirlceAdded){
+                        shapeId.setType(0);
+                        ShapeDetail shape = new ShapeDetail();
+                        shape.setRadius(radius);
+                        Center center = new Center();
+                        center.setLat(selectedPoint.latitude);
+                        center.setLng(selectedPoint.longitude);
+                        shape.setCenter(center);
+                        shapeId.setShape(shape);
+                    }else{
+                        shapeId.setType(1);
+                    }
                     tlc.setShape(shapeId);
 
                     goBackToAddItemView(view, tlc);
@@ -290,6 +296,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if(radius>10){
                     radius -= 10;
                 }
+                else if(radius == 10){
+                    radius = 0.0;
+                    cirlceAdded = false;
+                }
                 drawCircle();
             }
         });
@@ -319,6 +329,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 selectedPoint = place.getLatLng();
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(selectedPoint));
                 mMap.addMarker(new MarkerOptions().position(selectedPoint));
+                EditText name = (EditText) findViewById(R.id.dateTimeName);
+                name.setText(place.getName());
             }
 
             @Override
