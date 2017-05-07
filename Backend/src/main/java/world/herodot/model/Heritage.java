@@ -32,8 +32,19 @@ public class Heritage {
     @Column(name = "CATEGORY")
     private String category;
 
+    @Column(name = "IMAGEURL")
+    private String imageUrl;
+
     @Column(name = "TIMELOCATIONS")
     private String[] timeLocations;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public Long getId() {
         return id;
