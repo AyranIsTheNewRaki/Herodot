@@ -48,3 +48,5 @@ The link for the Herodot Repository could be found below:
 
 [Team repository ](https://github.com/AyranIsTheNewRaki/Herodot)
 
+Milestone Reports could be found [here](https://github.com/AyranIsTheNewRaki/Herodot/wiki/Milestones-Report-Hub).
+
