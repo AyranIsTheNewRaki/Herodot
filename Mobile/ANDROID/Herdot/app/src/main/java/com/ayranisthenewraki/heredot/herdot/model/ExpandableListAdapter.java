@@ -70,12 +70,17 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView listItemDescription = (TextView) convertView
                 .findViewById(R.id.listItemDescription);
 
-        new DownloadImageTask((ImageView) convertView.findViewById(R.id.itemImageView))
-                .execute("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBK3FmyjIENz16NWEl1iJcIWj8I5n8hs-rl5JPixzw-XppNfKx");
 
-        listItemCategory.setText(cho.getCategory());
-        listItemDescription.setText("test");
-
+        if(cho.getCategory()!=null){
+            listItemCategory.setText(cho.getCategory());
+        }
+        if(cho.getDescription() != null){
+            listItemDescription.setText(cho.getDescription());
+        }
+        if(cho.getImageUrl() != null){
+            new DownloadImageTask((ImageView) convertView.findViewById(R.id.itemImageView))
+                    .execute(cho.getImageUrl());
+        }
 
         Button viewOnMapButton = (Button) convertView.findViewById(R.id.itemViewOnMap);
         viewOnMapButton.setOnClickListener(new View.OnClickListener() {
@@ -83,9 +88,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 Intent intent = new Intent(_context, MapsViewAllActivity.class);
                 Bundle bundle = new Bundle();
                 TimeLocationListWrapper tlcListWrapper = new TimeLocationListWrapper();
-                TimeLocationCouple tlc = new TimeLocationCouple();
-                List<TimeLocationCouple> tlcList = new ArrayList<TimeLocationCouple>();
-                tlcListWrapper.setTlcList(tlcList);
+                tlcListWrapper.setTlcList(cho.getActualTimeLocations());
                 bundle.putSerializable("timeLocationList", tlcListWrapper);
                 intent.putExtras(bundle);
                 _context.startActivity(intent);
