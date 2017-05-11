@@ -80,6 +80,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         if(cho.getImageUrl() != null){
             new DownloadImageTask((ImageView) convertView.findViewById(R.id.itemImageView))
                     .execute(cho.getImageUrl());
+        }else{
+            ImageView imageView = (ImageView) convertView.findViewById(R.id.itemImageView);
+            imageView.setImageDrawable(null);
         }
 
         Button viewOnMapButton = (Button) convertView.findViewById(R.id.itemViewOnMap);
