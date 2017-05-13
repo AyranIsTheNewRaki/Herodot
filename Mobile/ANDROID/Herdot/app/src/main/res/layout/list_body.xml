@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/listItemCategory"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:textSize="17dip" />
+
+    <TextView
+        android:id="@+id/listItemDescription"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:textSize="17dip" />
+
+    <ImageView
+        android:id="@+id/itemImageView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/placeholder"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"/>
+
+    <Button
+        android:id="@+id/itemViewOnMap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_light"
+        android:text="View On Map"
+        android:textColor="@color/common_google_signin_btn_text_dark_default" />
+
+    <Button
+        android:id="@+id/itemAddAnnotationButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ADD ANNOTATION" />
+
+</LinearLayout>
