@@ -60,8 +60,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:name="com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment"
-            />
+            android:name="com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment"><requestFocus /></fragment>
 
     </RelativeLayout>
 
