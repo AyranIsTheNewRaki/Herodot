@@ -1,5 +1,6 @@
 package com.ayranisthenewraki.heredot.herdot.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by idilgun on 06/05/17.
  */
 
-public class CulturalHeritageObject {
+public class CulturalHeritageObject implements Serializable {
 
     private String title;
     private String description;
