@@ -17,15 +17,23 @@ import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ayranisthenewraki.heredot.herdot.model.CulturalHeritageObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.ayranisthenewraki.heredot.herdot.R.id.textView;
 
 public class addAnnotationActivity extends AppCompatActivity {
 
+    List<String> selectedTexts = new ArrayList<String>();
+    String currentSelection = "";
+    String allAnnotations = "";
+    TextView existingAnnotations;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,11 +43,30 @@ public class addAnnotationActivity extends AppCompatActivity {
 
         TextView listItemTitle = (TextView) findViewById(R.id.choName);
         final TextView listItemDescription = (TextView) findViewById(R.id.choDescription);
+        existingAnnotations = (TextView) findViewById(R.id.existingAnnotations);
+        final EditText annotationNotes = (EditText) findViewById(R.id.annotationNotes);
+        final Button addAnnotationButton = (Button) findViewById(R.id.addAnnotationButton);
         Bundle bundle = getIntent().getExtras();
         CulturalHeritageObject cho =  (CulturalHeritageObject) bundle.getSerializable("culturalHeritageObject");
 
         listItemTitle.setText(cho.getTitle());
         listItemDescription.setText(cho.getDescription());
+
+
+        addAnnotationButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+
+                allAnnotations = currentSelection + ": " +  annotationNotes.getText() + "\n" + allAnnotations;
+
+                existingAnnotations.setText(allAnnotations);
+
+                annotationNotes.setVisibility(View.INVISIBLE);
+                annotationNotes.setText("");
+                addAnnotationButton.setVisibility(View.INVISIBLE);
+            }
+        });
 
         listItemDescription.setCustomSelectionActionModeCallback(new android.view.ActionMode.Callback() {
 
@@ -71,10 +98,14 @@ public class addAnnotationActivity extends AppCompatActivity {
                     SpannableString highlightString = new SpannableString(listItemDescription.getText());
                     highlightString.setSpan(new ForegroundColorSpan(Color.BLUE), selStart, selEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                     listItemDescription.setText(highlightString);
+
+                    annotationNotes.setVisibility(View.VISIBLE);
+                    addAnnotationButton.setVisibility(View.VISIBLE);
                 }
                 // Perform your definition lookup with the selected text
                 final CharSequence selectedText = listItemDescription.getText().subSequence(min, max);
-
+                currentSelection = selectedText.toString();
+                selectedTexts.add(selectedText.toString());
                 return true;
             }
 
