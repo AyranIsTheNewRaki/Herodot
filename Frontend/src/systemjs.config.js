@@ -36,9 +36,6 @@
       },
       rxjs: {
         defaultExtension: 'js'
-      },
-      hypothesis: {
-        defaultExtension: 'js'
       }
     }
   });

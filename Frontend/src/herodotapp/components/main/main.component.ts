@@ -6,8 +6,6 @@ import { Component, OnInit, ElementRef } from '@angular/core';
     templateUrl: 'main.component.html'
 })
 export class MainComponent implements OnInit{
-  constructor () {}
-
   ngOnInit () {
     (<any>window).hypothesisConfig = function () {
       return {
