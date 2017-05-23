@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 
+import { FileUploadModule } from 'ng2-file-upload';
+import { Ng2CloudinaryModule } from 'ng2-cloudinary';
+
 import { MainComponent } from './components/main/main.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -13,6 +16,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { AddUpdateComponent } from './components/addupdate/addupdate.component';
 import { HomeComponent } from './components/home/home.component';
 import { AnnotationComponent } from './components/annotation/annotation.component';
+import { CategoryComponent } from './components/category/category.component';
 
 import { AuthGuard } from './guards/auth.guard';
 
@@ -30,6 +34,8 @@ import { AnnotationResolverService } from './services/annotation.resolver.servic
     BrowserModule,
     FormsModule,
     HttpModule,
+    FileUploadModule,
+    Ng2CloudinaryModule,
     RouterModule.forRoot([
       {
         path: 'categories',
@@ -57,6 +63,10 @@ import { AnnotationResolverService } from './services/annotation.resolver.servic
         resolve: {
           annotations: AnnotationResolverService
         }
+      },
+      {
+        path: "category",
+        component: CategoryComponent
       }
     ])
   ],
@@ -70,7 +80,8 @@ import { AnnotationResolverService } from './services/annotation.resolver.servic
     AddUpdateComponent,
     CategoryFilterPipe,
     AnnotationComponent,
-    HomeComponent
+    HomeComponent,
+    CategoryComponent
   ],
   bootstrap: [MainComponent],
   providers: [

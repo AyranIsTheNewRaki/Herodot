@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="content col-lg-12">
+        <div *ngIf="!items">
+            Loading...
+        </div>
+        <div *ngIf="items && items.length === 0">
+            Sorry, no CHO found!
+        </div>
+        <div *ngFor="let item of items" class="box box-grid col-lg-4 col-md-6 col-sm-12">
+            <a href="/heritage?id={{item.id}}">
+                <div class="box-image">
+                        <img src="{{item.imageUrl}}" alt="">
+                    </div>
+                    <div class="box-title-item">
+                        <h2>{{item.title}}</h2>
+                        <h3>{{item.username}}</h3>
+                    </div>
+            </a>
+        </div>
+    </div>
+</div>
