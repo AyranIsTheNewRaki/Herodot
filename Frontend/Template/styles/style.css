@@ -1,40 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700,700i');
-body {
-    background-color: #f4f5f6;
-    font-family: 'Open Sans', sans-serif;
-}
 div.container {
     width: 100%;
     max-width: 1440px;}
 div.container > .row {
     padding: 0 54px;
 }
-div.header {
-    background-color: #b08232;
-    padding: 0 100px !important;
-    position: relative;
-}
-div.logo {
-    padding: 32px 0 60px;}
-div.logo a {}
-div.logo a img {
-    max-width: 90px;
-    width: 100%;}
-div.menu {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    height: 100%;}
-div.menu ul {
-    position: absolute;
-    bottom: 0;
-    right: 0;}
-div.menu ul li {
-    display: inline-block;
-    padding: 0 72px 26px 0;}
-div.menu ul li a {;
-    color: #fff;
-    font-weight: 600;}
+
 div.breadcrumbs {;
     min-height: 41px;
     padding: 31px 39px;}
@@ -106,77 +76,14 @@ div.item-meta-container div.item-meta h4 {
     font-size: 15px;
     line-height: 22px
 }
-div#annotations {
-    opacity: 0;
-    background-color: #fff;
-    width:300px; 
-    height:200px;
-    position:fixed; 
-    right:-240px;
-    top:0;
-    box-shadow: 0px 0px 3px rgba(0, 0, 0, .3);
-    padding: 20px 0;
-    overflow-y: auto;
-}
-a#btn-annotations {
-    width: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    display: block;
-    padding: 20px 0 20px 16px;
-    background-color: #fff;
-    cursor: pointer;
-    z-index: 1;
-}
-a#btn-annotations img {
-    width: 23px;
-}
-div.btn-annotations-close-container {
-    margin: 0 0 16px;
-}
-a#btn-annotations-close {
-    margin: 0 24px;
-    cursor: pointer;
-    padding-bottom: 10px;}
-a#btn-annotations-close img {
-    width: 134px;
-}
+
 div.hr {
     border-bottom: 2px solid lightgray;
 }
 div.hr-2 {
     border-bottom: 1px solid lightgray;
 }
-div.annotation {
-    font-size: 14px;
-    margin: 0;
-    padding: 16px 10px;
-}
-div.annotation div.title {
-    font-weight: bold;
-    padding: 5px 15px;
-}
-div.annotation div.date {
-    color: #aaa;
-    font-style: italic;
-    padding: 5px 15px;
-}
-div.annotation div.text {
-    padding: 15px;}
-div.annotation div.image {
-    text-align: center;
-}
-div.annotation div.image img {
-    max-width: 210px;
-}
-div.btn-add-annotation {
-    text-align: center;
-    font-weight: 600;
-    padding: 40px 0 100px;}
-div.btn-add-annotation a {
-    color: #c26b32;
-}
+
 div.box-form {
     padding: 0 8%;
 }
@@ -287,10 +194,10 @@ div.searchbox {
     padding: 24px 72px;
     width: 100%; }
 div.searchbox input {
-width: 50%;;
-padding: 8px 12px;
-border: none;
-border-radius: 4px;;
+    width: 50%;;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;;
 }
 div.group-th label {
     font-size :15px !important;
@@ -326,3 +233,5 @@ div.radio-container div.radiorow label {
     border: 1px solid black;
     border-radius: 4px;;}
 .text-left {text-align: left !important;}
+.small-field{margin-top:15px !important;}
+.small-field-wrapper{margin-top:20px !important;}
