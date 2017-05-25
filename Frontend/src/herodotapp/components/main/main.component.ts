@@ -9,7 +9,8 @@ export class MainComponent implements OnInit{
   ngOnInit () {
     (<any>window).hypothesisConfig = function () {
       return {
-        "openSidebar": false
+        "openSidebar": false,
+        "showHighlight": true
       };
     };
   }

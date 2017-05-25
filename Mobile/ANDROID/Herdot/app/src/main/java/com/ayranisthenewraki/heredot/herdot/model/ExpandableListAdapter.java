@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.ayranisthenewraki.heredot.herdot.HeritageItemHomepageActivity;
 import com.ayranisthenewraki.heredot.herdot.MapsViewAllActivity;
 import com.ayranisthenewraki.heredot.herdot.R;
+import com.ayranisthenewraki.heredot.herdot.addAnnotationActivity;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -93,6 +94,17 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 TimeLocationListWrapper tlcListWrapper = new TimeLocationListWrapper();
                 tlcListWrapper.setTlcList(cho.getActualTimeLocations());
                 bundle.putSerializable("timeLocationList", tlcListWrapper);
+                intent.putExtras(bundle);
+                _context.startActivity(intent);
+            }
+        });
+
+        Button addAnnotationButton = (Button) convertView.findViewById(R.id.itemAddAnnotationButton);
+        addAnnotationButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(_context, addAnnotationActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("culturalHeritageObject", cho);
                 intent.putExtras(bundle);
                 _context.startActivity(intent);
             }
