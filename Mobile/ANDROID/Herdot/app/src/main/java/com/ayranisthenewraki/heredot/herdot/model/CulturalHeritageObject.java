@@ -16,6 +16,7 @@ public class CulturalHeritageObject implements Serializable {
     private List<String> timeLocations;
     private String imageUrl;
     private List<TimeLocationCouple> actualTimeLocations;
+    private String id;
 
     public String getTitle() {
         return title;
@@ -63,5 +64,13 @@ public class CulturalHeritageObject implements Serializable {
 
     public void setActualTimeLocations(List<TimeLocationCouple> actualTimeLocations) {
         this.actualTimeLocations = actualTimeLocations;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
