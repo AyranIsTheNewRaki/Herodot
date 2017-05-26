@@ -5,7 +5,7 @@ This project is done as part of the SWE574 course of Bogazici University, namely
 
 The aim of the project will be to develop a mobile and web application about cultural heritage. This will be done as a team and communication and project management skills in a team environment will be major learning goals. 
 
-The following sections will give more insgight on the above description.
+The following sections will give more insight on the above description.
 
 
 # Requirements
