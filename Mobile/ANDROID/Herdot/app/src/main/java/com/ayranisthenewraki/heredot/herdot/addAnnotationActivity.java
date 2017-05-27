@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ayranisthenewraki.heredot.herdot.model.Annotation;
+import com.ayranisthenewraki.heredot.herdot.model.HypothesisResponse;
 import com.ayranisthenewraki.heredot.herdot.model.SelectorH;
 import com.ayranisthenewraki.heredot.herdot.model.myTarget;
 import com.ayranisthenewraki.heredot.herdot.model.CulturalHeritageObject;
@@ -37,6 +38,7 @@ import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -46,8 +48,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Url;
 
 import static com.ayranisthenewraki.heredot.herdot.R.id.textView;
 
@@ -58,7 +63,10 @@ public class addAnnotationActivity extends AppCompatActivity {
     String allAnnotations = "";
     TextView existingAnnotations;
     String HYPOTHESISURL = "https://hypothes.is/";
+    String APIURL = "http://api.herodot.world";
     Annotation currentAnnotation = new Annotation();
+    String choId;
+    String annotationId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +84,11 @@ public class addAnnotationActivity extends AppCompatActivity {
 
         listItemTitle.setText(cho.getTitle());
         listItemDescription.setText(cho.getDescription());
+        choId = cho.getId();
+
+        annotationId = "avo6CELhEee3a5fKxqwoGg";
+
+        getAnnotation(findViewById(R.id.content_add_annotation));
 
 
         addAnnotationButton.setOnClickListener(new View.OnClickListener(){
@@ -171,25 +184,32 @@ public class addAnnotationActivity extends AppCompatActivity {
         addAnnotationActivity.addAnnoService service = retrofit.create( addAnnotationActivity.addAnnoService.class);
         Gson gson = new Gson();
         String json = gson.toJson(currentAnnotation);
-        final Call<ObjectNode> addAnnoCall = service.addAnno(json);
+        final Call<String> addAnnoCall = service.addAnno(json);
 
 
         //make an asynchronous call.
-        addAnnoCall.enqueue(new Callback<ObjectNode>() {
+        addAnnoCall.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<ObjectNode> call, Response<ObjectNode> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
                 if (response.code() == 200) {
 
-                    System.out.print("aa");
+                    String responseBody = response.body();
+
+                    Gson gson = new Gson();
+                    HypothesisResponse hypothesisResponse = gson.fromJson(responseBody, HypothesisResponse.class);
+
+                    annotationId = hypothesisResponse.getId();
+
+                    saveAnnotation(view);
                 }
                 else {
-                    System.out.print("aa");
+                    // do nothing, won't save annotation.
                 }
             }
 
             @Override
-            public void onFailure(Call<ObjectNode> call, Throwable t) {
-                System.out.print("aa");
+            public void onFailure(Call<String> call, Throwable t) {
+                // do nothing, won't save annotation.
             }
         });
     }
@@ -198,7 +218,102 @@ public class addAnnotationActivity extends AppCompatActivity {
 
         @Headers({"Content-Type: application/json", "Authorization: Bearer 6879-gQ3825AY-yywCbMTqFJ6HxuQndT6BjdYHh9irTYTe38"})
         @POST("/api/annotations")
-        Call<ObjectNode> addAnno(@Body String json);
+        Call<String> addAnno(@Body String json);
     }
 
+    private void saveAnnotation(final View view){
+        OkHttpClient client = NetworkManager.getNewClient();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(APIURL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(JacksonConverterFactory.create())
+                .client(client)
+                .build();
+        addAnnotationActivity.saveAnnoService service = retrofit.create( addAnnotationActivity.saveAnnoService.class);
+        final Call<String> saveAnnoCall = service.saveAnno(APIURL + "/saveAnnotation/" + choId + "/" + annotationId);
+
+
+        //make an asynchronous call.
+        saveAnnoCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.code() == 200) {
+                    System.out.print("aa");
+                }
+                else {
+                    System.out.print("aa");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                System.out.print("aa");
+            }
+        });
+
+
+    }
+
+    private interface saveAnnoService {
+
+        @GET
+        public Call<String> saveAnno(@Url String url);
+    }
+
+    private void getAnnotation(final View view){
+        OkHttpClient client = NetworkManager.getNewClient();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(HYPOTHESISURL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(JacksonConverterFactory.create())
+                .client(client)
+                .build();
+        addAnnotationActivity.getAnnoService service = retrofit.create( addAnnotationActivity.getAnnoService.class);
+
+        final Call<String> addAnnoCall = service.getAnno("https://hypothes.is/api/annotations/" + annotationId);
+
+
+        //make an asynchronous call.
+        addAnnoCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.code() == 200) {
+                    Gson gson = new Gson();
+                    try{
+                        HypothesisResponse hypothesisResponse = gson.fromJson(response.body(),  HypothesisResponse.class);
+                        String annotatedPart = hypothesisResponse.getTarget()[0].getSelector().get(0).getExact();
+                        allAnnotations = annotatedPart + ": " +  hypothesisResponse.getText() + "\n" + allAnnotations;
+                        final TextView listItemDescription = (TextView) findViewById(R.id.choDescription);
+                        SpannableString highlightString = new SpannableString(listItemDescription.getText());
+                        Integer start = listItemDescription.getText().toString().indexOf(annotatedPart);
+                        Integer end = start + annotatedPart.length();
+                        highlightString.setSpan(new ForegroundColorSpan(Color.BLUE),start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        listItemDescription.setText(highlightString);
+                        final TextView existingAnnotations = (TextView) findViewById(R.id.existingAnnotations);
+                        existingAnnotations.setText(allAnnotations);
+                        existingAnnotations.setVisibility(View.VISIBLE);
+                    }catch(Exception e){
+                        // do nothing
+                    }
+
+                }
+                else {
+                    // do nothing.
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                // do nothing.
+            }
+        });
+    }
+
+    private interface getAnnoService {
+
+        @Headers({"Content-Type: application/json", "Authorization: Bearer 6879-gQ3825AY-yywCbMTqFJ6HxuQndT6BjdYHh9irTYTe38"})
+        @GET()
+        Call<String> getAnno(@Url String url);
+    }
 }
