@@ -29,6 +29,9 @@ import { ChoService } from './services/cho.service';
 import { AnnotationService } from './services/annotation.service';
 import { AnnotationResolverService } from './services/annotation.resolver.service';
 
+import 'shim';
+import 'zonejs';
+
 @NgModule({
   imports: [
     BrowserModule,
