@@ -48,13 +48,9 @@ Extensive research is done on the terminology, standards, data models, engineeri
 
 # Created by Team @AyranIsTheNewRaki, Project Name:Herodot #
 
-The link for team information could be found below:
+For more info about the team: [Organization](https://github.com/orgs/AyranIsTheNewRaki/people) 
 
-[Organization](https://github.com/orgs/AyranIsTheNewRaki/people) 
-
-The link for the Herodot Repository could be found below:
-
-[Team repository ](https://github.com/AyranIsTheNewRaki/Herodot)
+For more info on Herodot Repository: [Team repository ](https://github.com/AyranIsTheNewRaki/Herodot)
 
 
 
