@@ -41,7 +41,6 @@ public class HeritageController {
      *
      * @return A ResponseEntity containing a Collection of Heritage objects.
      */
-    @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "/heritage", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<Heritage>> getHeritages(){
         Collection<Heritage> heritages = heritageService.findAll();
@@ -62,7 +61,6 @@ public class HeritageController {
      * @return A ResponseEntity containing a single Heritage object, if found,
      *         and a HTTP status code as described in the method comment.
      */
-    @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "/heritage/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Heritage> getHeritage(@PathVariable("id") Long id){
         Heritage heritage = heritageService.findOne(id);
