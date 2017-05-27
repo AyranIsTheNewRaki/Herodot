@@ -3,7 +3,10 @@
 # Introduction #
 This project is done as part of the SWE574 course of Bogazici University, namely Software Development as a Team.
 
-The aim of the project will be to develop a mobile and web application about cultural heritage. This will be done as a team and communication and project management skills in a team environment will be major learning goals.
+The aim of the project will be to develop a mobile and web application about cultural heritage. This will be done as a team and communication and project management skills in a team environment will be major learning goals. 
+
+The following sections will give more insight on the above description.
+
 
 # Requirements
 
@@ -47,4 +50,8 @@ The link for team information could be found below:
 The link for the Herodot Repository could be found below:
 
 [Team repository ](https://github.com/AyranIsTheNewRaki/Herodot)
+
+**Milestone Reports** could be found [here](https://github.com/AyranIsTheNewRaki/Herodot/wiki/Milestones-Report-Hub)
+
+**Project Plan** could be found [here](https://app.ganttpro.com/#!/app/home)
 
