@@ -17,6 +17,7 @@ import { AddUpdateComponent } from './components/addupdate/addupdate.component';
 import { HomeComponent } from './components/home/home.component';
 import { AnnotationComponent } from './components/annotation/annotation.component';
 import { CategoryComponent } from './components/category/category.component';
+import { DetailComponent } from './components/detail/detail.component';
 
 import { AuthGuard } from './guards/auth.guard';
 
@@ -70,6 +71,10 @@ import 'zonejs';
       {
         path: "category",
         component: CategoryComponent
+      },
+      {
+        path: 'heritage',
+        component: DetailComponent
       }
     ])
   ],
@@ -84,7 +89,8 @@ import 'zonejs';
     CategoryFilterPipe,
     AnnotationComponent,
     HomeComponent,
-    CategoryComponent
+    CategoryComponent,
+    DetailComponent
   ],
   bootstrap: [MainComponent],
   providers: [
