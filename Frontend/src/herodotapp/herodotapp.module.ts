@@ -29,6 +29,13 @@ import { ChoService } from './services/cho.service';
 import { AnnotationService } from './services/annotation.service';
 import { AnnotationResolverService } from './services/annotation.resolver.service';
 
+let appLinkEl = document.querySelector('link[type="application/annotator+html"]');
+if (appLinkEl) appLinkEl.dispatchEvent(new Event('destroy'));
+
+let embedScript = document.createElement('script');
+embedScript.setAttribute('src','https://hypothes.is/app/embed.js');
+document.getElementsByTagName("main-app")[0].appendChild(embedScript);
+
 import 'shim';
 import 'zonejs';
 
