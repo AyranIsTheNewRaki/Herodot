@@ -46,7 +46,8 @@ Extensive research is done on the terminology, standards, data models, engineeri
 **Project Plan** could be found [here](https://app.ganttpro.com/#!/app/home)
 
 
-# Created by Team @AyranIsTheNewRaki, Project Name:Herodot #
+# Created by Team @AyranIsTheNewRaki
+# Project Name: Herodot
 
 For more info about the team: [Organization](https://github.com/orgs/AyranIsTheNewRaki/people) 
 
