@@ -73,6 +73,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/heritage/**").permitAll()
+                .antMatchers("/saveannotation/**").permitAll()
+                .antMatchers("/annotation/**").permitAll()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .anyRequest().authenticated();
 
