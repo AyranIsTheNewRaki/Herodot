@@ -50,23 +50,45 @@ public class MapsViewAllActivity extends FragmentActivity implements OnMapReadyC
         List<TimeLocationCouple> tlcList = tlcWrapper.getTlcList();
 
         for(int i=0; i<tlcList.size(); i++){
-            TimeLocationCouple tlc = tlcList.get(i);
-            LatLng current =  new LatLng(tlc.getShape().getLat(), tlc.getShape().getLng());
-            mMap.addMarker(new MarkerOptions().position(current).title(tlc.getName() + ", " + tlc.getTime() + " " + tlc.getTimeType()));
+            try{
+                TimeLocationCouple tlc = tlcList.get(i);
+                boolean couldAddMarker = false;
+                if(tlc.getShape().getLat()!=null && tlc.getShape().getLng()!=null){
+                    LatLng current =  new LatLng(tlc.getShape().getLat(), tlc.getShape().getLng());
+                    mMap.addMarker(new MarkerOptions().position(current).title(tlc.getName() + ", " + tlc.getTime() + " " + tlc.getTimeType()));
+                    couldAddMarker = true;
 
-            if(i==0){
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(current));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(current, 15));
+                    if(i==0){
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(current));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(current, 15));
+                    }
+                }
+
+
+                if(tlc.getShape().getType() == 0){
+                    // Adding the circle to the GoogleMap
+                    LatLng current =  new LatLng(tlc.getShape().getShape().getCenter().getLat(), tlc.getShape().getShape().getCenter().getLng());
+                    if(!couldAddMarker){
+                        mMap.addMarker(new MarkerOptions().position(current).title(tlc.getName() + ", " + tlc.getTime() + " " + tlc.getTimeType()));
+                        couldAddMarker = true;
+
+                        if(i==0){
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(current));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(current, 15));
+                        }
+                    }
+
+                    mMap.addCircle(new CircleOptions().center(current)
+                            .radius(tlc.getShape().getShape().getRadius())
+                            .strokeColor(Color.BLACK)
+                            .fillColor(0x30ff0000)
+                            .strokeWidth(2));
+
+                }
+            }catch(Exception e){
+                // won't add a marker but won't crash
             }
 
-            if(tlc.getShape().getType() == 0){
-                // Adding the circle to the GoogleMap
-                mMap.addCircle(new CircleOptions().center(current)
-                        .radius(tlc.getShape().getShape().getRadius())
-                        .strokeColor(Color.BLACK)
-                        .fillColor(0x30ff0000)
-                        .strokeWidth(2));
-            }
         }
     }
 }

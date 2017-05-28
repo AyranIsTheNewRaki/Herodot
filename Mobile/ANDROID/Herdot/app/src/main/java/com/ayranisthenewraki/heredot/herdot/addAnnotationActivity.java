@@ -86,10 +86,7 @@ public class addAnnotationActivity extends AppCompatActivity {
         listItemDescription.setText(cho.getDescription());
         choId = cho.getId();
 
-        annotationId = "avo6CELhEee3a5fKxqwoGg";
-
-        getAnnotation(findViewById(R.id.content_add_annotation));
-
+        getAllAnnotionsForCHO(findViewById(R.id.content_add_annotation));
 
         addAnnotationButton.setOnClickListener(new View.OnClickListener(){
 
@@ -230,25 +227,19 @@ public class addAnnotationActivity extends AppCompatActivity {
                 .client(client)
                 .build();
         addAnnotationActivity.saveAnnoService service = retrofit.create( addAnnotationActivity.saveAnnoService.class);
-        final Call<String> saveAnnoCall = service.saveAnno(APIURL + "/saveAnnotation/" + choId + "/" + annotationId);
+        final Call<String> saveAnnoCall = service.saveAnno(APIURL + "/saveannotation/" + choId + "/" + annotationId);
 
 
         //make an asynchronous call.
         saveAnnoCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                if (response.code() == 200) {
-                    System.out.print("aa");
-                }
-                else {
-                    System.out.print("aa");
-                }
+                // won't do anything with the response.
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-
-                System.out.print("aa");
+                // won't add annotation but its ok.
             }
         });
 
@@ -260,6 +251,64 @@ public class addAnnotationActivity extends AppCompatActivity {
         @GET
         public Call<String> saveAnno(@Url String url);
     }
+
+
+
+
+    private void getAllAnnotionsForCHO(final View view){
+        OkHttpClient client = NetworkManager.getNewClient();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(APIURL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(JacksonConverterFactory.create())
+                .client(client)
+                .build();
+        addAnnotationActivity.getAllAnnotionsForCHOService service = retrofit.create( addAnnotationActivity.getAllAnnotionsForCHOService.class);
+        final Call<String> getAllAnnotionsForCHOServiceCall = service.getAllAnno(APIURL + "/annotation/" + choId);
+
+
+        //make an asynchronous call.
+        getAllAnnotionsForCHOServiceCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.code() == 200) {
+
+                    try{
+                        Gson gson = new Gson();
+                        String[] annotations = gson.fromJson(response.body(), String[].class);
+                        for(String currentAnnotationId : annotations){
+                            annotationId = currentAnnotationId;
+                            getAnnotation(view);
+                        }
+                    }catch(Exception e){
+                        // won't get annotations but should not crash
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                // won't add annotation but its ok.
+            }
+        });
+
+
+    }
+
+    private interface getAllAnnotionsForCHOService {
+
+        @GET
+        public Call<String> getAllAnno(@Url String url);
+    }
+
+
+
+
+
+
+
+
 
     private void getAnnotation(final View view){
         OkHttpClient client = NetworkManager.getNewClient();
