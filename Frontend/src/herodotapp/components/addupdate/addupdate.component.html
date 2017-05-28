@@ -1,0 +1,156 @@
+<div class="row">
+    <div class="content col-lg-12">
+        <form name="form" (ngSubmit)="f.form.valid && addCho()" #f="ngForm" novalidate>
+            <div class="box box-form box-form-inner box-bg-transparent col-lg-10 col-md-10 col-sm-12 col-lg-offset-1 col-md-offset-1">
+                <div class="form inner-form">
+                    <div class="box-fields">
+                        <div id="add-step4" class="row">
+                            <div class="row fieldgroup group-th">
+                                <div class="col-lg-3 col-sm-12 label-wrapper"><label for="">Property</label></div>
+                                <div class="col-lg-9 col-sm-12 label-wrapper label-wrapper-right"><label for="">Value</label></div>
+                            </div>
+                            <div class="row fieldgroup group-fileupload">
+                                <div class="col-lg-3 col-sm-12 label-wrapper"><label for="">Insert media of the cultural heritage item</label></div>
+                                <div class="col-lg-9 col-sm-12 field-wrapper">
+                                    <input type="file" ng2FileSelect [uploader]="uploader" accept="image/*;capture=camera">
+                                    <button (click)="upload()">Upload</button>
+                                    <cl-image [public-id]="imageId" [cloud-name]="uploader.cloudName" height="200"></cl-image>
+                                </div>
+                            </div>
+                            <div class="row fieldgroup group-textfield">
+                                <div class="col-lg-3 col-sm-12 label-wrapper"><label for="">Title</label></div>
+                                <div class="col-lg-9 col-sm-12 field-wrapper">
+                                    <input type="text" placeholder="" name="title" [(ngModel)]="model.title" #title="ngModel" minlength="3" required/>
+                                    <div *ngIf="f.submitted && !title.valid" class="help-block">Title should be at least 3 characters long.</div>
+                                    <div class="fieldtip">
+                                        <span>Please enter the name of the cultural heritage items in a simple way like: mona lisa painting, rodin thinking man, gobekli tepe ex: buccin trombone</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row fieldgroup group-textarea">
+                                <div class="col-lg-3 col-sm-12 label-wrapper"><label for="">Description</label></div>
+                                <div class="col-lg-9 col-sm-12 field-wrapper">
+                                    <textarea name="description" id="" [(ngModel)]="model.description" #description="ngModel"></textarea>
+                                    <div class="fieldtip">
+                                        <span>please enter the significance, interest details, special attributes, facts etc. of the cultural heritage item in the title buccin trombone ex: brass, stockings on main slides, bell with one coil, angled to face forwards.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row fieldgroup group-multiradios">
+                                <div class="col-lg-3 col-sm-12 label-wrapper"><label for="">subject</label></div>
+                                <div class="col-lg-9 col-sm-12 field-wrapper">
+                                    <div class="fieldtip text-center">
+                                        <span>Choose only 1 subject among 3 different cultural heritage object categories</span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-6 col-sm-12 heritage-category">
+                                            <div class="radioset-header">Movable Cultural Heritage items</div>
+                                            <div class="radio-container">
+                                                <div *ngFor="let category of (categories | categoryFilter : 'Movable')" class="radiorow clearfix"><input type="radio" name="categoryGroup" value="{{category.displayName}}"
+                                                        [(ngModel)]="model.category" #categoryGroup="ngModel" required/>
+                                                    <label for="11">{{category.displayName}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12 heritage-category">
+                                            <div class="radioset-header">immovable cultural heritage items</div>
+                                            <div class="radio-container">
+                                                <div *ngFor="let category of (categories | categoryFilter : 'Immovable')" class="radiorow clearfix"><input type="radio" name="categoryGroup" value="{{category.displayName}}"
+                                                        [(ngModel)]="model.category" #categoryGroup="ngModel" required/>
+                                                    <label for="11">{{category.displayName}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12 heritage-category">
+                                            <div class="radioset-header">intangible heritage item</div>
+                                            <div class="radio-container">
+                                                <div *ngFor="let category of (categories | categoryFilter : 'Intangible')" class="radiorow clearfix"><input type="radio" name="categoryGroup" value="{{category.displayName}}"
+                                                        [(ngModel)]="model.category" #categoryGroup="ngModel" required/>
+                                                    <label for="11">{{category.displayName}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="f.submitted && !model.category" class="help-block">Please select a category</div>
+                                </div>
+                            </div>
+                            <div class="row fieldgroup group-textfield">
+                                <div class="col-lg-3 col-sm-12 label-wrapper"><label for="">Location</label></div>
+                                <div class="col-lg-9 col-sm-12 field-wrapper">
+                                    <input id="mapSearch" type="text" placeholder="Search..." />
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <div id="map" class="embed-responsive-item" style="border: 1px solid black;"></div>
+                                    </div>
+                                    <div class="fieldtip">
+                                        <span>please enter the place of the object and the time it was at that location ex; Paris, 1990; istanbul, 2010</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row fieldgroup group-textfield">
+                                <div class="col-lg-3 col-sm-12 label-wrapper"><label for="">Time</label></div>
+                                <!--<div *ngIf="model.timeLocations.length === 0">
+                                    <div class="col-lg-9 col-sm-12 field-wrapper">
+                                        <input class="col-sm-4" type="text" placeholder="Time" [(ngModel)]="model.time" name="time" #time="ngModel" />
+                                        <select class="selectpicker col-sm-4" name="" [(ngModel)]="model.timeType" name="timeType" #timeType="ngModel">
+                                    <option>Era</option>
+                                    <option>Century</option>
+                                    <option>Year</option>
+                                    <option>Date</option>
+                                </select>
+                                    </div>
+                                </div>-->
+                                <div *ngFor="let timeLocation of model.timeLocations" class="col-lg-3 col-sm-12 field-wrapper small-field-wrapper">
+                                    <div class="col-lg-12">
+                                        {{timeLocation.shape.identifier}}:
+                                    </div>
+                                    <div class="col-lg-12 small-field">
+                                        <input type="text" placeholder="Name" [(ngModel)]="timeLocation.name" name="name_{{timeLocation.shape.identifier}}" />
+                                    </div>
+                                    <div class="col-lg-12 small-field">
+                                        <input class="col-sm-4" type="text" placeholder="Time" [(ngModel)]="timeLocation.time" name="time_{{timeLocation.shape.identifier}}"
+                                        />
+                                    </div>
+                                    <div class="col-lg-12 fieldgroup group-selectbox">
+                                        <div class="field-wrapper">
+                                            <select name="timetype_{{timeLocation.shape.identifier}}" [(ngModel)]="timeLocation.timeType">
+                                                <option style="display: none;" disabled="disabled">Select...</option>
+                                                <option>Era</option>
+                                                <option>Century</option>
+                                                <option>Year</option>
+                                                <option>Date</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 small-field box-button text-left">
+                                        <button (click)="deleteShape(timeLocation.shape.id)">Delete</button>
+                                    </div>
+                                </div>
+                                <div class="fieldtip">
+                                    <span>the date/ era of the cultural heritage item to be created ex: bc 200, 1985, helenistic era.</span>
+                                </div>
+                            </div>
+                            <div class="row fieldgroup group-selectbox">
+                                <div class="col-lg-3 col-sm-12 label-wrapper"><label for="">Provided by</label></div>
+                                <div class="col-lg-9 col-sm-12 field-wrapper">
+                                    <select name="provider" id="" [(ngModel)]="model.userId">
+                                        <option value="{{model.userId}}">{{model.username}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row fieldgroup group-button">
+                                <div class="col-lg-3 col-sm-12 label-wrapper"><label for=""></label></div>
+                                <div class="col-lg-9 col-sm-12 field-wrapper">
+                                    <div class="box-button text-left">
+                                        <button [disabled]="loading" >Add Item</button>
+                                        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="/assests/scripts/add.js" type="text/javascript"></script>

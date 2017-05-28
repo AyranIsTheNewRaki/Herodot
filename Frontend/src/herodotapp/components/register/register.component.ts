@@ -7,7 +7,7 @@ import { UserRegistration } from '../../objects/userRegistration';
 
 @Component({
     moduleId: module.id,
-    selector: 'reg,ster',
+    selector: 'register',
     templateUrl: 'register.component.html'
 })
 export class RegisterComponent {
@@ -25,13 +25,15 @@ export class RegisterComponent {
             this .loading = false;
             return;
         }
-        var registrationResult = this.userService.register(this.model);
-        if (registrationResult.isSuccessfull) {
+        this.userService.register(this.model).subscribe( data => {
             this.alertService.success("Registration was successfull.", true);
             this.router.navigate(['login']);
-        } else {
-            this.alertService.error(registrationResult.errorMessage);
-            this.loading = false;
-        }
+        }, error => {
+            if(error.status === 500){
+                console.log(error);
+                this.alertService.error(JSON.parse(error._body).message);
+                this.loading = false;
+            }
+        });
     }
 }

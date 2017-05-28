@@ -11,10 +11,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import world.herodot.security.JwtAuthenticationRequest;
 import world.herodot.security.JwtTokenUtil;
 import world.herodot.security.JwtUser;
@@ -28,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
  * https://github.com/AyranIsTheNewRaki/Herodot
  */
 
+@CrossOrigin
 @RestController
 public class AuthenticationRestController {
 
@@ -76,5 +74,4 @@ public class AuthenticationRestController {
             return ResponseEntity.badRequest().body(null);
         }
     }
-
 }

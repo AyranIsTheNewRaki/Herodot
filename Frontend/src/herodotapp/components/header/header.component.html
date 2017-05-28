@@ -1,21 +1,15 @@
-<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            <a class="navbar-brand" href="#">Herodot</a>
+<div class="header row">
+        <div class="logo col-lg-6 col-sm-12">
+            <a href=""><img src="/assets/images/logo.png" alt=""></a>
         </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
+        <div class="menu col-lg-6 col-sm-12 text-right">
+            <div class="searchbox">
+                <input type="text" placeholder="Search heritage item" />
+            </div>
+            <ul>
                 <li>
                     <a href="/categories">Categories</a>
                 </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
                 <li *ngIf="!isLoggedIn">
                     <a href="/login">Login</a>
                 </li>
@@ -23,7 +17,10 @@
                     <a href="/register">Sign up</a>
                 </li>
                 <li *ngIf="isLoggedIn">
-                    <a href="/myprofile">{{username}}</a>
+                    <a href="/addupdate">Add New Item</a>
+                </li>
+                <li *ngIf="isLoggedIn">
+                    <a href="/myheritages">My Heritages</a>
                 </li>
                 <li *ngIf="isLoggedIn">
                     <a href="/login?logout">Log out</a>
@@ -31,4 +28,7 @@
             </ul>
         </div>
     </div>
-</nav>
+    <div class="row">
+        <div class="breadcrumbs col-lg-12">
+        </div>
+    </div>

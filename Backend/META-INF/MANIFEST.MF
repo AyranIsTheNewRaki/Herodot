@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Class-Path: C:\Users\emre\Desktop\Herodot\Herodot\Backend\target\class
+ es
+Main-Class: world.herodot.Application
+

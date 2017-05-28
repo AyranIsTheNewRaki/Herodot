@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsUtils;
 import world.herodot.security.JwtAuthenticationEntryPoint;
 import world.herodot.security.JwtAuthenticationTokenFilter;
 
@@ -70,6 +71,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.js"
                 ).permitAll()
                 .antMatchers("/auth/**").permitAll()
+                .antMatchers("/register").permitAll()
+                .antMatchers("/heritage/**").permitAll()
+                .antMatchers("/saveannotation/**").permitAll()
+                .antMatchers("/annotation/**").permitAll()
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .anyRequest().authenticated();
 
         // Custom JWT based security filter

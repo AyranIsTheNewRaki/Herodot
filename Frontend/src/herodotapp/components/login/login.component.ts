@@ -5,31 +5,40 @@ import { UserService } from '../../services/user.service'
 import { AlertService } from '../../services/alert.service'
 
 @Component({
-    moduleId: module.id,
-    selector: 'login',
-    templateUrl: 'login.component.html'
+  moduleId: module.id,
+  selector: 'login',
+  templateUrl: 'login.component.html'
 })
 export class LoginComponent {
-    model: any = {};
-    returnUrl: string;
-    loading = false;
+  model: any = {};
+  returnUrl: string;
+  loading = false;
 
-    constructor(private route: ActivatedRoute, private router: Router,private userService: UserService, private alertService: AlertService) {
+  constructor(private route: ActivatedRoute, private router: Router, private userService: UserService, private alertService: AlertService) { }
 
-    }
+  ngOnInit() {
+    this.userService.logout();
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'home';
+  }
 
-    ngOnInit(){
-        this.userService.logout();
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-    }
-
-    login(): void {
-        this.loading = true;
-        if(this.userService.tryLogin(this.model.username, this.model.password)){
-             this.router.navigate([this.returnUrl]);
-        }else{
-            this.alertService.error("Invalid username or password!");
-            this.loading = false;
-        }
-    }
+  login(): void {
+    this.loading = true;
+    this.userService.tryLogin(this.model.username, this.model.password).subscribe(data => {
+      if (data != null) {
+        this.router.navigate([this.returnUrl]);
+      } else {
+        this.alertService.error("Invalid username or password!");
+        this.loading = false;
+      }
+    }, error => {
+      if (error.status === 401) {
+        this.alertService.error("Invalid username or password!");
+        this.loading = false;
+      }
+      else {
+        this.alertService.error("Error => " + error);
+        this.loading = false;
+      }
+    });
+  }
 }
