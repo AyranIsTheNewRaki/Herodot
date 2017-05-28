@@ -36,7 +36,7 @@ export class MapsService {
         this.drawingManager = new google.maps.drawing.DrawingManager();
         this.drawingManager.setOptions({
             drawingControl: !isReadonly,
-            drawingControlOptions: { drawingModes: ['marker', 'circle', 'polyline', 'rectangle'] }
+            drawingControlOptions: { drawingModes: ['circle'] }
         });
         this.drawingManager.setMap(this.map);
 
