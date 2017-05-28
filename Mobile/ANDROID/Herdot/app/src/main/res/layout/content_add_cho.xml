@@ -110,4 +110,13 @@
         android:layout_below="@+id/title"
         android:background="@drawable/camera" />
 
+    <Button
+        android:id="@+id/photoGalleryButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignEnd="@+id/cameraButton"
+        android:layout_alignRight="@+id/cameraButton"
+        android:layout_below="@+id/cameraButton"
+        android:background="@drawable/photo_gallery" />
+
 </RelativeLayout>
