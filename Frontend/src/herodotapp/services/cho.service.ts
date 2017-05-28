@@ -24,7 +24,7 @@ export class ChoService {
     }
 
     getChos() : Observable<Cho[]>{
-        let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': this.userService.getUser().token });
+        let headers = new Headers({ 'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
         return this.http.get('http://api.herodot.world/heritage', options).map((response: Response) => {
             return <Cho[]>response.json()
@@ -32,7 +32,7 @@ export class ChoService {
     }
 
     getCho(id : number) :Observable<Cho>{
-        let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': this.userService.getUser().token });
+        let headers = new Headers({ 'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
         return this.http.get('http://api.herodot.world/heritage/'+id, options).map((response: Response) => {
             console.log(response.json());
