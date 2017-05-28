@@ -34,7 +34,7 @@ let appLinkEl = document.querySelector('link[type="application/annotator+html"]'
 if (appLinkEl) appLinkEl.dispatchEvent(new Event('destroy'));
 
 let embedScript = document.createElement('script');
-embedScript.setAttribute('src','https://hypothes.is/app/embed.js');
+embedScript.setAttribute('src', 'https://hypothes.is/app/embed.js');
 document.getElementsByTagName("main-app")[0].appendChild(embedScript);
 
 import 'shim';
@@ -48,6 +48,7 @@ import 'zonejs';
     FileUploadModule,
     Ng2CloudinaryModule,
     RouterModule.forRoot([
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
         path: 'categories',
         component: CategoryListComponent
@@ -68,9 +69,6 @@ import 'zonejs';
       {
         path: 'home',
         component: HomeComponent,
-        canActivate: [
-          UserService
-        ],
         resolve: {
           annotations: AnnotationResolverService
         }
