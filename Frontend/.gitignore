@@ -6,3 +6,5 @@ bower_components
 aot/*
 dist/*
 yarn.lock
+deploy/*
+*.log
