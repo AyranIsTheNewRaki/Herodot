@@ -1,7 +1,4 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-// import * as annotatorjs from 'annotatorjs';
-
-declare var $:any;
 
 @Component({
     moduleId: module.id,
@@ -9,9 +6,11 @@ declare var $:any;
     templateUrl: 'main.component.html'
 })
 export class MainComponent implements OnInit{
-  constructor (private elementRef: ElementRef) {}
-
   ngOnInit () {
-    $(this.elementRef.nativeElement).annotator();
+    (<any>window).hypothesisConfig = function () {
+      return {
+        "openSidebar": false
+      };
+    };
   }
 }
