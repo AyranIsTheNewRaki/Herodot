@@ -18,6 +18,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AnnotationComponent } from './components/annotation/annotation.component';
 import { CategoryComponent } from './components/category/category.component';
 import { DetailComponent } from './components/detail/detail.component';
+import { MyHeritagesComponent } from './components/myheritages/myheritages.component';
 
 import { AuthGuard } from './guards/auth.guard';
 
@@ -61,6 +62,11 @@ import 'shim';
         canActivate: [AuthGuard]
       },
       {
+        path:"myheritages",
+        component: MyHeritagesComponent,
+        canActivate: [AuthGuard]
+      },
+      {
         path: 'home',
         component: HomeComponent,
         resolve: {
@@ -89,7 +95,8 @@ import 'shim';
     AnnotationComponent,
     HomeComponent,
     CategoryComponent,
-    DetailComponent
+    DetailComponent,
+    MyHeritagesComponent
   ],
   bootstrap: [MainComponent],
   providers: [
