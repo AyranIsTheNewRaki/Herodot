@@ -8,3 +8,4 @@
 "use strict";function assign(t,s){for(var e in s)s.hasOwnProperty(e)&&(t[e]=s[e]);return t}function settings(t){for(var s=t.querySelectorAll("script.js-hypothesis-config"),e={},n=0;n<s.length;n++)assign(e,JSON.parse(s[n].textContent));return e}module.exports=settings;
 
 },{}]},{},[2])
+
