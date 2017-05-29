@@ -1,5 +1,6 @@
 package com.ayranisthenewraki.heredot.herdot.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by idilgun on 06/05/17.
  */
 
-public class CulturalHeritageObject {
+public class CulturalHeritageObject implements Serializable {
 
     private String title;
     private String description;
@@ -15,6 +16,7 @@ public class CulturalHeritageObject {
     private List<String> timeLocations;
     private String imageUrl;
     private List<TimeLocationCouple> actualTimeLocations;
+    private String id;
 
     public String getTitle() {
         return title;
@@ -62,5 +64,13 @@ public class CulturalHeritageObject {
 
     public void setActualTimeLocations(List<TimeLocationCouple> actualTimeLocations) {
         this.actualTimeLocations = actualTimeLocations;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

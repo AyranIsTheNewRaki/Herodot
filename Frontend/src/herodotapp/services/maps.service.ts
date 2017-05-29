@@ -24,6 +24,7 @@ export class MapsService {
     }
 
     initMap(mapBox: Element, isReadonly: boolean, lat: number, lng: number, searchBox: Element = null): void {
+        console.log(mapBox);
         var mapProp = {
             center: new google.maps.LatLng(lat, lng),
             zoom: 5,
@@ -35,7 +36,7 @@ export class MapsService {
         this.drawingManager = new google.maps.drawing.DrawingManager();
         this.drawingManager.setOptions({
             drawingControl: !isReadonly,
-            drawingControlOptions: { drawingModes: ['marker', 'circle', 'polyline', 'rectangle'] }
+            drawingControlOptions: { drawingModes: ['circle'] }
         });
         this.drawingManager.setMap(this.map);
 
@@ -104,9 +105,27 @@ export class MapsService {
         return this.shapeSource.asObservable();
     }
 
-    deleteShape(id : number): any {
+    deleteShape(id: number): any {
         this.googleShapes[id][0].setMap(null);
         this.googleShapes[id][1].setMap(null);
         this.googleShapes[id] = null;
+    }
+
+    addShape(shape: Shape, center: boolean): void {
+        if (shape.type === ShapeType.CIRCLE) {
+            let markerPosition = new Geocode();
+            markerPosition.lat = shape.shape.center.lat;
+            markerPosition.lng = shape.shape.center.lng;
+            this.addMarker(markerPosition, shape.identifier);
+            new google.maps.Circle({
+                map: this.map,
+                center: shape.shape.center,
+                radius: shape.shape.radius
+            });
+            if (center) {
+                this.map.setCenter(markerPosition);
+                this.map.setZoom(15);
+            }
+        }
     }
 }
