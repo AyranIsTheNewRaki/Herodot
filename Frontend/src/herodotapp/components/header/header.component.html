@@ -1,4 +1,48 @@
-<div class="header row">
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <span>
+            <img src="/assets/images/HeredotIconv6Inverted.png" class="img-responsive img-rounded">
+          </span>
+        </div>
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="/home">Home</a>
+          </li>
+          <li>
+            <a href="/addupdate">Add Heritage Item</a>
+          </li>
+          <li class="dropdown">
+              <a href="/categories">Heritage Categories</a>
+          </li>
+          <li>
+            <a href="/myheritages">My Heritage Items</a>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li *ngIf="!isLoggedIn">
+            <a href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
+          </li>
+          <li *ngIf="!isLoggedIn">
+            <a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+          </li>
+          <li *ngIf="isLoggedIn">
+            <a href="/login?logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a>
+          </li>
+          <li>
+            <a><span class="glyphicon glyphicon-circle-arrow-right"></span> Click Arrow to Annotate</a>
+          </li>
+        </ul>
+        <form ngNoForm name="searchform" role="form" class="navbar-form navbar-right text-center" action="/search" method="get">
+          <div class="form-group">
+            <input type="text" class="form-control" name="query" placeholder="Search">
+          </div>
+          <input type="submit" class="btn" value="Search" />
+        </form>
+      </div>
+    </nav>
+
+<!--<div class="header row">
         <div class="logo col-lg-6 col-sm-12">
             <a href=""><img src="/assets/images/logo.png" alt=""></a>
         </div>
@@ -31,4 +75,4 @@
     <div class="row">
         <div class="breadcrumbs col-lg-12">
         </div>
-    </div>
+    </div>-->

@@ -1,3 +1,4 @@
+
 <div class="row">
     <div class="col-md-2">
         <img src="/assets/images/heredotIconv3.jpg" class="center-block img-responsive">
@@ -8,4 +9,17 @@
     <h3 class="text-center text-info">Keep track of humanity's collective past and future&nbsp;
         <br>Collaborate using annotations feature</h3>
 </div>
-<category-list></category-list>
+<div class="row">
+    <div class="content col-lg-12">
+        <div *ngFor="let category of categories" class="box box-grid col-lg-4 col-md-6 col-sm-12">
+            <a href="/category?category={{category.displayName}}">
+                <div class="box-image">
+                    <img src="/assets/images/categories/{{category.image}}" alt="{{category.displayName}}" class="img-responsive img-thumbnail">
+                </div>
+                <div class="box-title-category">
+                    <h2>{{category.displayName}}</h2>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

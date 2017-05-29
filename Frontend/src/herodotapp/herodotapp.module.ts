@@ -19,6 +19,7 @@ import { AnnotationComponent } from './components/annotation/annotation.componen
 import { CategoryComponent } from './components/category/category.component';
 import { DetailComponent } from './components/detail/detail.component';
 import { MyHeritagesComponent } from './components/myheritages/myheritages.component';
+import { SearchComponent } from './components/search/search.component';
 
 import { AuthGuard } from './guards/auth.guard';
 
@@ -80,6 +81,10 @@ import 'shim';
       {
         path: 'heritage',
         component: DetailComponent
+      },
+      {
+        path: "search",
+        component: SearchComponent
       }
     ])
   ],
@@ -96,7 +101,8 @@ import 'shim';
     HomeComponent,
     CategoryComponent,
     DetailComponent,
-    MyHeritagesComponent
+    MyHeritagesComponent,
+    SearchComponent
   ],
   bootstrap: [MainComponent],
   providers: [
