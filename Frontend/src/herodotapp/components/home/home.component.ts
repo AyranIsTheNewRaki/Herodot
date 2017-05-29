@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { CATEGORIES } from '../../data/categories';
 
 @Component({
     moduleId: module.id,
@@ -7,6 +8,8 @@ import { Router, ActivatedRoute } from '@angular/router';
     templateUrl: 'home.component.html'
 })
 export class HomeComponent {
+  categories = CATEGORIES;
+
   constructor (private route: ActivatedRoute) {
     console.log('home component const')
   }
