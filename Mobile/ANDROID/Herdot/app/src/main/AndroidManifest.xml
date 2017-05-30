@@ -74,7 +74,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MapsViewAllActivity"
-            android:label="@string/title_activity_maps_view_all"></activity>
+            android:label="@string/title_activity_maps_view_all" />
+        <activity
+            android:name=".addAnnotationActivity"
+            android:label="@string/title_activity_add_annotation"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

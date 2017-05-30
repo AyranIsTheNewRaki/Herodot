@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -38,6 +39,7 @@ import com.google.gson.GsonBuilder;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Time;
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
@@ -67,8 +69,11 @@ public class addChoActivity extends AppCompatActivity {
     static final int ADD_TIME_LOCATION_REQUEST = 1;
     static final int REQUEST_IMAGE_CAPTURE = 2;
     static final int VIEW_TIME_LOCATION_REQUEST = 3;
+    static final int PICK_PHOTO_FROM_GALLERY = 4;
 
     static final char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+
+    Context _context;
 
     List<TimeLocationCouple> tlcList = new ArrayList<TimeLocationCouple>();
 
@@ -89,6 +94,8 @@ public class addChoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_cho);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        _context = this;
 
         final Spinner subjectDropdown = (Spinner)findViewById(R.id.subjectSpinner);
         String[] items = new String[]{"Select a subject category", "Painting", "Sculpture", "Book/Manuscript", "Handcraft", "Archaeological Artifact",
@@ -127,6 +134,17 @@ public class addChoActivity extends AppCompatActivity {
             public void onClick(View view){
 
                 dispatchTakePictureIntent();
+
+            }
+        });
+
+        final Button photoGalleryButton = (Button) findViewById(R.id.photoGalleryButton);
+
+        photoGalleryButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+
+                pickImage();
 
             }
         });
@@ -246,6 +264,20 @@ public class addChoActivity extends AppCompatActivity {
             mImageView.setImageBitmap(imageBitmap);
 
         }
+
+        if (requestCode == PICK_PHOTO_FROM_GALLERY && resultCode == RESULT_OK) {
+            if (data == null) {
+                return;
+            }
+            try{
+                InputStream inputStream = _context.getContentResolver().openInputStream(data.getData());
+                imageBitmap = BitmapFactory.decodeStream(inputStream);
+                ImageView mImageView = (ImageView) findViewById(R.id.imageView2);
+                mImageView.setImageBitmap(imageBitmap);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 
     private void addChoObject(final View view){
@@ -350,6 +382,12 @@ public class addChoActivity extends AppCompatActivity {
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
+    }
+
+    public void pickImage() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, PICK_PHOTO_FROM_GALLERY);
     }
 
     private File createImageFile() throws IOException {

@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 
+import { FileUploadModule } from 'ng2-file-upload';
+import { Ng2CloudinaryModule } from 'ng2-cloudinary';
+
 import { MainComponent } from './components/main/main.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -13,6 +16,10 @@ import { RegisterComponent } from './components/register/register.component';
 import { AddUpdateComponent } from './components/addupdate/addupdate.component';
 import { HomeComponent } from './components/home/home.component';
 import { AnnotationComponent } from './components/annotation/annotation.component';
+import { CategoryComponent } from './components/category/category.component';
+import { DetailComponent } from './components/detail/detail.component';
+import { MyHeritagesComponent } from './components/myheritages/myheritages.component';
+import { SearchComponent } from './components/search/search.component';
 
 import { AuthGuard } from './guards/auth.guard';
 
@@ -25,12 +32,19 @@ import { ChoService } from './services/cho.service';
 import { AnnotationService } from './services/annotation.service';
 import { AnnotationResolverService } from './services/annotation.resolver.service';
 
+import 'zonejs';
+import 'shim';
+
+
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
+    FileUploadModule,
+    Ng2CloudinaryModule,
     RouterModule.forRoot([
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
         path: 'categories',
         component: CategoryListComponent
@@ -49,14 +63,28 @@ import { AnnotationResolverService } from './services/annotation.resolver.servic
         canActivate: [AuthGuard]
       },
       {
+        path:"myheritages",
+        component: MyHeritagesComponent,
+        canActivate: [AuthGuard]
+      },
+      {
         path: 'home',
         component: HomeComponent,
-        canActivate: [
-          UserService
-        ],
         resolve: {
           annotations: AnnotationResolverService
         }
+      },
+      {
+        path: "category",
+        component: CategoryComponent
+      },
+      {
+        path: 'heritage',
+        component: DetailComponent
+      },
+      {
+        path: "search",
+        component: SearchComponent
       }
     ])
   ],
@@ -70,7 +98,11 @@ import { AnnotationResolverService } from './services/annotation.resolver.servic
     AddUpdateComponent,
     CategoryFilterPipe,
     AnnotationComponent,
-    HomeComponent
+    HomeComponent,
+    CategoryComponent,
+    DetailComponent,
+    MyHeritagesComponent,
+    SearchComponent
   ],
   bootstrap: [MainComponent],
   providers: [

@@ -41,17 +41,17 @@ Extensive research is done on the terminology, standards, data models, engineeri
 - [Web mockup v3 editable](https://drive.google.com/file/d/0B-1y2ZQCjTGvSG5Bd2RSd1hxajA/view?usp=sharing) 
 - [Web mockup v3 published](https://www.draw.io/?lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1&title=V3Copy%20of%20herodotHome1.xml#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D0B-1y2ZQCjTGvSG5Bd2RSd1hxajA%26export%3Ddownload)
 
-# Created by Team @AyranIsTheNewRaki, Project Name:Herodot #
-
-The link for team information could be found below:
-
-[Organization](https://github.com/orgs/AyranIsTheNewRaki/people) 
-
-The link for the Herodot Repository could be found below:
-
-[Team repository ](https://github.com/AyranIsTheNewRaki/Herodot)
-
 **Milestone Reports** could be found [here](https://github.com/AyranIsTheNewRaki/Herodot/wiki/Milestones-Report-Hub)
 
 **Project Plan** could be found [here](https://app.ganttpro.com/#!/app/home)
+
+
+# Created by Team @AyranIsTheNewRaki
+# Project Name: Herodot
+
+For more info about the team: [Organization](https://github.com/orgs/AyranIsTheNewRaki/people) 
+
+For more info on Herodot Repository: [Team repository ](https://github.com/AyranIsTheNewRaki/Herodot)
+
+
 

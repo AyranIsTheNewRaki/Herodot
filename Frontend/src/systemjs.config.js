@@ -25,7 +25,11 @@
 
       // other libraries
       'rxjs':                      'npm:rxjs',
-      'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js'
+      'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
+      'shim':                      'npm:core-js/client/shim.min.js',
+      'zonejs':                    'npm:zone.js/dist/zone.js',
+      'ng2-cloudinary': 'npm:ng2-cloudinary/dist/umd/ng2-cloudinary.js',
+      'ng2-file-upload': 'npm:ng2-file-upload/bundles/ng2-file-upload.umd.js'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
